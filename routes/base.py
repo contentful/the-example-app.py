@@ -117,6 +117,10 @@ def format_meta_title(title, locale):
     )
 
 
+def trans(symbol):
+    translate(symbol, locale().code)
+
+
 def render_with_globals(template_name, **params):
     global_parameters = {
         'title': None,
@@ -137,9 +141,7 @@ def render_with_globals(template_name, **params):
         'preview_token': session.get(
             'preview_token',
             environ.get('CONTENTFUL_PREVIEW_TOKEN', None)
-        ),
-        'format_meta_title': format_meta_title,
-        'translate': translate
+        )
     }
     global_parameters.update(params)
 
