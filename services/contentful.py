@@ -1,4 +1,5 @@
 from contentful import Client
+from contentful.errors import EntryNotFoundError
 
 
 class Contentful(object):
@@ -63,12 +64,17 @@ class Contentful(object):
         })
 
     def landing_page(self, slug, api_id, locale):
-        return self.client(api_id).entry({
+        pages = self.client(api_id).entries({
             'content_type': 'layout',
             'locale': locale,
             'include': 6,
             'fields.slug': slug
         })
+        if pages:
+            return pages[0]
+        raise EntryNotFoundError(
+            'Landing Page not found for slug: {0}'.format(slug)
+        )
 
     def entry(self, entry_id, api_id):
         return self.client(api_id).entry(entry_id)

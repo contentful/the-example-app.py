@@ -1,5 +1,3 @@
-import os
-
 from flask import Blueprint, redirect, url_for, session
 from contentful.errors import EntryNotFoundError
 
@@ -7,15 +5,14 @@ from routes.base import contentful, \
                         api_id, \
                         locale, \
                         render_with_globals, \
-                        raw_breadcrumbs
+                        raw_breadcrumbs, \
+                        VIEWS_PATH
 from lib.breadcrumbs import refine
 from routes.errors import wrap_errors
 from i18n.i18n import translate
 
 
-templates_folder = os.path.join(os.path.dirname(__name__), '..', 'views')
-
-courses = Blueprint('courses', __name__, template_folder=templates_folder)
+courses = Blueprint('courses', __name__, template_folder=VIEWS_PATH)
 
 
 @courses.route('/courses')

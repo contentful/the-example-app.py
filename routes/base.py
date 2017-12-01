@@ -1,5 +1,5 @@
 from flask import render_template, request, session
-from os import environ
+from os import environ, path
 from contentful.errors import HTTPError
 from contentful.locale import Locale
 
@@ -8,6 +8,7 @@ from i18n.i18n import translate
 from services.contentful import Contentful
 
 
+VIEWS_PATH = path.join(path.dirname(__name__), '..', 'views')
 DEFAULT_API = 'cda'
 DEFAULT_LOCALE_CODE = 'en-US'
 DEFAULT_LOCALE = Locale({
@@ -18,14 +19,18 @@ DEFAULT_LOCALE = Locale({
 
 
 def before_request():
-    if 'space_id' in request.args:
-        session['space_id'] = request.args['space_id']
-    if 'delivery_token' in request.args:
-        session['delivery_token'] = request.args['delivery_token']
-    if 'preview_token' in request.args:
-        session['preview_token'] = request.args['preview_token']
-    if 'editorial_features' in request.args:
-        session['editorial_features'] = request.args['editorial_features']
+    update_session_for('space_id')
+    update_session_for('delivery_token')
+    update_session_for('preview_token')
+    update_session_for('editorial_features')
+
+
+def update_session_for(key, with_value=None):
+    if key in request.args:
+        if with_value is None:
+            session[key] = request.args[key]
+        else:
+            session[key] = with_value
 
 
 def contentful():
