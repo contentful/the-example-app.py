@@ -1,6 +1,7 @@
 import os
+from datetime import timedelta
 
-from flask import Flask
+from flask import Flask, session
 from flask_misaka import Misaka
 from flask_sslify import SSLify
 from dotenv import load_dotenv
@@ -27,6 +28,16 @@ if os.environ.get('APP_ENV', 'development') == 'production':
     app.debug = False
 else:
     app.debug = True
+
+# Register Session Secret
+app.secret = os.environ['SESSION_SECRET']  # This will purposely fail if not found
+
+# Set session timeout to 2 days
+# Session will refresh on each visit
+@app.before_request
+def set_session_timeout():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(days=2)
 
 # Register Markdown engine
 Misaka(app)
