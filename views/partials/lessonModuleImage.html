@@ -1,0 +1,13 @@
+<div class="lesson-module lesson-module-image">
+    {% if 'image' in module.fields() %}
+        <figure class="lesson-module-image__figure">
+            <img src="{{ module.image.url() }}" alt="{{ module.image.title }}" class="lesson-module-image__image" />
+
+            {% if 'caption' in module.fields() %}
+                <figcaption class="lesson-module-image__caption">{{ module.caption }}</figcaption>
+            {% endif %}
+        </figure>
+    {% else %}
+        <h3>{{ 'imageErrorTitle'|trans }}</h3>
+    {% endif %}
+</div>

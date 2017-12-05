@@ -1,3 +1,4 @@
+import json
 import traceback
 from os import environ
 from functools import wraps
@@ -28,3 +29,11 @@ def render_error(status_code, error, stacktrace):
         status=status_code,
         environment=environ.get('APP_ENV', None)
     ), status_code
+
+
+def pretty_json(value):
+    return json.dumps(
+        value,
+        indent=4,
+        separators=(',', ': ')
+    )

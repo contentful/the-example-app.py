@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="layout-no-sidebar">
+        {% include 'partials/breadcrumb.html' %}
+    </div>
+
+    <div class="layout-sidebar">
+        <section class="layout-sidebar__sidebar">
+            <div class="layout-sidebar__sidebar-header">
+                <h2 class="layout-sidebar__sidebar-title">{{ 'tableOfContentsLabel'|trans }}</h2>
+            </div>
+
+            <div class="layout-sidebar__sidebar-content">
+                <div class="table-of-contents">
+                    <div class="table-of-contents__list">
+                        <div class="table-of-contents__item">
+                            <a
+                                href="/courses/{{ course.slug }}{{ query_string }}"
+                                class="table-of-contents__link {{ 'visited' if course.id in visited_lessons else '' }} {{ 'active' if not lesson else '' }}"
+                                >{{ 'courseOverviewLabel'|trans }}</a>
+                        </div>
+
+                        {% for course_lesson in course.lessons %}
+                            <div class="table-of-contents__item">
+                                <a
+                                    href="/courses/{{ course.slug }}/lessons/{{ lesson.slug }}{{ query_string }}"
+                                    class="table-of-contents__link {{ 'visited' if course_lesson.id in visited_lessons else '' }} {{ 'active' if lesson and course_lesson.id == lesson.id else '' }}"
+                                    >{{ course_lesson.title }}</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="layout-sidebar__content">
+            {% if lesson %}
+                {% include 'partials/lesson.html' %}
+            {% else %}
+                <div class="course">
+                    <h1 class="course__title">{{ title }}</h1>
+
+                    {#
+                    {% include 'partials/editorialFeatures.html' %}
+                    #}
+
+                    <div class="course__overview">
+                        <h3 class="course__overview-title">{{ 'overviewLabel'|trans }}</h3>
+
+                        {% if 'duration' in course.fields(current_locale.code) %}
+                            <div class="course__overview-item">
+                                <svg class="course__overview-icon">
+                                    <use xlink:href="{{ url_for('static', filename='icons/icons.svg') }}#duration"></use>
+                                </svg>
+
+                                <div class="course__overview-value">
+                                    {{ 'durationLabel'|trans }}: {{ course.duration }} {{ 'minutesLabel'|trans }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if 'skill_level' in course.fields(current_locale.code) %}
+                            <div class="course__overview-item">
+                                <svg class="course__overview-icon">
+                                    <use xlink:href="{{ url_for('static', filename='icons/icons.svg') }}#skill-level"></use>
+                                </svg>
+
+                                <div class="course__overview-value">
+                                    {{ 'skillLevelLabel'|trans }}: {{ '%s%s'|format(course.skill_level, 'Label')|trans }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="course__overview-cta-wrapper">
+                            <a
+                                href="/courses/{{ course.slug}}/lessons/{{ next_lesson.slug }}{{ query_string }}"
+                                class="course__overview-cta cta"
+                                >{{ 'startCourseLabel'|trans }}</a>
+                        </div>
+                    </div>
+
+                    <div class="course__description">
+                        {{ course.description|markdown }}
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}

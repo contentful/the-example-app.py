@@ -1,0 +1,113 @@
+<div class="lesson-module lesson-module-code">
+    <div class="lesson-module-code__header">
+        {% if 'curl' in module.fields(current_locale.code) %}
+            <a href="#" class="lesson-module-code__trigger" data-target="{{ module.id }}-curl">cURL</a>
+        {% endif %}
+
+        {% if 'dot_net' in module.fields(current_locale.code) %}
+            <a href="#" class="lesson-module-code__trigger" data-target="{{ module.id }}-dotnet">.NET</a>
+        {% endif %}
+
+        {% if 'javascript' in module.fields(current_locale.code) %}
+            <a href="#" class="lesson-module-code__trigger" data-target="{{ module.id }}-javascript">JavaScript</a>
+        {% endif %}
+
+        {% if 'java' in module.fields(current_locale.code) %}
+            <a href="#" class="lesson-module-code__trigger" data-target="{{ module.id }}-java">Java</a>
+        {% endif %}
+
+        {% if 'java_android' in module.fields(current_locale.code) %}
+            <a href="#" class="lesson-module-code__trigger" data-target="{{ module.id }}-android">Android</a>
+        {% endif %}
+
+        {% if 'php' in module.fields(current_locale.code) %}
+            <a href="#" class="lesson-module-code__trigger" data-target="{{ module.id }}-php">PHP</a>
+        {% endif %}
+
+        {% if 'python' in module.fields(current_locale.code) %}
+            <a href="#" class="lesson-module-code__trigger lesson-module-code__trigger--active" data-target="{{ module.id }}-python">Python</a>
+        {% endif %}
+
+        {% if 'ruby' in module.fields(current_locale.code) %}
+            <a href="#" class="lesson-module-code__trigger" data-target="{{ module.id }}-ruby">Ruby</a>
+        {% endif %}
+
+        {% if 'swift' in module.fields(current_locale.code) %}
+            <a href="#" class="lesson-module-code__trigger" data-target="{{ module.id }}-swift">Swift</a>
+        {% endif %}
+    </div>
+
+    <div class="lesson-module-code__code-area">
+        {% if 'curl' in module.fields(current_locale.code) %}
+            <div class="lesson-module-code__code" id="{{ module.id }}-curl">
+                <pre>
+                    <code class="shell">{{ module.curl }}</code>
+                </pre>
+            </div>
+        {% endif %}
+
+        {% if 'dot_net' in module.fields(current_locale.code) %}
+            <div class="lesson-module-code__code" id="{{ module.id }}-dotnet">
+                <pre>
+                    <code class="csharp">{{ module.dot_net }}</code>
+                </pre>
+            </div>
+        {% endif %}
+
+        {% if 'javascript' in module.fields(current_locale.code) %}
+            <div class="lesson-module-code__code" id="{{ module.id }}-javascript">
+                <pre>
+                    <code class="javascript">{{ module.javascript }}</code>
+                </pre>
+            </div>
+        {% endif %}
+
+        {% if 'java' in module.fields(current_locale.code) %}
+            <div class="lesson-module-code__code" id="{{ module.id }}-java">
+                <pre>
+                    <code class="java">{{ module.java }}</code>
+                </pre>
+            </div>
+        {% endif %}
+
+        {% if 'java_android' in module.fields(current_locale.code) %}
+            <div class="lesson-module-code__code" id="{{ module.id }}-android">
+                <pre>
+                    <code class="java">{{ module.java_android }}</code>
+                </pre>
+            </div>
+        {% endif %}
+
+        {% if 'php' in module.fields(current_locale.code) %}
+            <div class="lesson-module-code__code" id="{{ module.id }}-php">
+                <pre>
+                    <code class="php">{{ module.php }}</code>
+                </pre>
+            </div>
+        {% endif %}
+
+        {% if 'python' in module.fields(current_locale.code) %}
+            <div class="lesson-module-code__code lesson-module-code__code--active" id="{{ module.id }}-python">
+                <pre>
+                    <code class="python">{{ module.python }}</code>
+                </pre>
+            </div>
+        {% endif %}
+
+        {% if 'ruby' in module.fields(current_locale.code) %}
+            <div class="lesson-module-code__code" id="{{ module.id }}-ruby">
+                <pre>
+                    <code class="ruby">{{ module.ruby }}</code>
+                </pre>
+            </div>
+        {% endif %}
+
+        {% if 'swift' in module.fields(current_locale.code) %}
+            <div class="lesson-module-code__code" id="{{ module.id }}-swift">
+                <pre>
+                    <code class="swift">{{ module.swift }}</code>
+                </pre>
+            </div>
+        {% endif %}
+    </div>
+</div>

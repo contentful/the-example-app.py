@@ -68,6 +68,8 @@
   "spaceIdLabel": "Space ID",
   "spaceIdHelpText": "Die Space Id ist eine eindeutige Identifizierung für Ihren Space.",
   "accessTokenLabel": "Access Token",
+  "cdaAccessTokenLabel": "Content Delivery API Access Token",
+  "cpaAccessTokenLabel": "Content Preview API Access Token",
   "contentDeliveryApiHelpText": "Schauen Sie sich veröffentlichten Inhalt mit dieser API an.",
   "contentPreviewApiHelpText": "Schauen Sie sich unveröffentlichten Inhalt mit dieser API an. (z.B. Inhalt im Zustand “Entwurf”).",
   "enableEditorialFeaturesLabel": "Editoriale Funktionen aktivieren.",
@@ -80,5 +82,7 @@
   "beginnerLabel": "Anfänger",
   "intermediateLabel": "Fortgeschrittener",
   "advancedLabel": "Experte",
-  "editInTheWebAppLabel": "In der web app bearbeiten"
+  "editInTheWebAppLabel": "In der Contentful web app bearbeiten",
+  "error404Route": "Ein nicht unterstützter HTTP Route",
+  "currentLocaleLabel": "Deutsch (Deutschland)"
 }

@@ -117,13 +117,10 @@ def format_meta_title(title, locale):
     )
 
 
-def trans(symbol):
-    translate(symbol, locale().code)
-
-
 def render_with_globals(template_name, **params):
     global_parameters = {
         'title': None,
+        'locales': locales(),
         'current_locale': locale(),
         'current_api': current_api(),
         'current_path': request.path,

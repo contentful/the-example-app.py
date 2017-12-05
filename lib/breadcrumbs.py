@@ -16,7 +16,7 @@ def breadcrumbs(path, locale_code):
         if is_translation_available('{0}Label'.format(label), locale_code):
             label = translate('{0}Label'.format(label), locale_code)
 
-        path = parts[0:index].join('/')
+        path = '/'.join(parts[0:index])
 
         crumbs.append({
             'url': '/{0}'.format(path),

@@ -1,0 +1,9 @@
+<nav class="breadcrumb">
+    <ul>
+        {% for crumb in breadcrumbs -%}
+            <li>
+                <a href="{{ crumb['url'] }}">{{ crumb['label'] }}</a>
+            </li>
+        {%- endfor %}
+    </ul>
+</nav>

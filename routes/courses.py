@@ -136,7 +136,7 @@ def find_lesson_by_slug(course_slug, lesson_slug):
         visited_lessons=visited_lessons,
         breadcrumbs=refine(
             refine(
-                raw_breadcrumbs,
+                raw_breadcrumbs(),
                 course
             ),
             lesson

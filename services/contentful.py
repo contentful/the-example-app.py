@@ -50,6 +50,16 @@ class Contentful(object):
 
         return self.client(api_id).entries(query)
 
+    def course(self, slug, api_id, locale):
+        courses = self.courses(api_id, locale, {
+            'fields.slug': slug
+        })
+        if courses:
+            return courses[0]
+        raise EntryNotFoundError(
+            'Course not found for slug: {0}'.format(slug)
+        )
+
     def courses_by_category(self, category_id, api_id, locale):
         return self.courses(
             api_id,

@@ -1,0 +1,29 @@
+{% set course = module.course %}
+
+<div class="module module-highlighted-course">
+    <div class="module-highlighted-course__wrapper" style="background-image: url('{{ course.image.url() }}');">
+        <div class="module-highlighted-course__overlay"></div>
+
+        <div class="module-highlighted-course__content">
+            {% if 'categories' in course.fields(current_locale.code) %}
+                <div class="module-highlighted-course__categories">
+                    {% for category in course.categories %}
+                        <a href="/courses/categories/{{ category.slug }}{{ query_string }}" class="module-highlighted-course__category">{{ category.title }}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <h2 class="module-highlighted-course__title">
+                <a href="/courses/{{ course.slug }}{{ query_string }}">{{ course.title }}</a>
+            </h2>
+
+            <div class="module-highlighted-course__description-wrapper">
+                <p>{{ course.short_description|markdown }}</p>
+            </div>
+
+            <div class="module-highlighted-course__link-wrapper">
+                <a href="/courses/{{ course.slug }}{{ query_string }}" class="module-highlighted-course__link">{{ 'viewCourseLabel'|trans }}</a>
+            </div>
+        </div>
+    </div>
+</div>

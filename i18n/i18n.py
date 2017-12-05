@@ -6,11 +6,11 @@ import glob
 TRANSLATIONS = {}
 
 
-def initialize_translations():
+def I18n(app):
     if TRANSLATIONS:
         return
 
-    locales_path = os.path.join(os.path.dirname(__file__), 'locales')
+    locales_path = os.path.join(os.path.dirname(__file__), '..', 'public', 'locales', 'json')
 
     try:
         for file_name in glob.glob(os.path.join(locales_path, '*.json')):
@@ -18,9 +18,16 @@ def initialize_translations():
 
             with open(file_name, 'r') as f:
                 TRANSLATIONS[locale_name] = json.loads(f.read())
+
+        app.add_template_filter(trans)
     except Exception as e:
         print('Error loading localization files.')
         print(e)
+
+
+def trans(symbol):
+    from routes.base import locale
+    return translate(symbol, locale().code)
 
 
 def translate(symbol, locale='en-US'):
@@ -36,4 +43,4 @@ def translate(symbol, locale='en-US'):
 
 
 def is_translation_available(symbol, locale='en-US'):
-    bool(TRANSLATIONS.get(locale, {}).get(symbol, False))
+    return bool(TRANSLATIONS.get(locale, {}).get(symbol, False))

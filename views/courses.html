@@ -1,1 +1,48 @@
-courses view
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="layout-no-sidebar">
+        {% include 'partials/breadcrumb.html' %}
+    </div>
+
+    <div class="layout-sidebar">
+        <section class="layout-sidebar__sidebar">
+            <div class="layout-sidebar__sidebar-header">
+                <h2 class="layout-sidebar__sidebar-title">{{ 'categoriesLabel'|trans }}</h2>
+            </div>
+
+            <div class="layout-sidebar__sidebar-content">
+                <div class="sidebar-menu">
+                    <ul class="sidebar-menu__list">
+                        <li class="sidebar-menu__item">
+                            <a href="/courses{{ query_string }}" class="sidebar-menu__link {{ '' if current_category else 'active' }}">{{ 'allCoursesLabel'|trans }}</a>
+                        </li>
+
+                        {% for category in categories %}
+                            <li class="sidebar-menu__item">
+                                <a
+                                    href="/courses/categories/{{ category_slug }}{{ query_string }}"
+                                    class="sidebar-menu__link {{ 'active' if current_category and current_category.id == category.id else '' }}"
+                                    >{{ category.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="layout-sidebar__content">
+            <div class="courses">
+                <h1>{{ title }}</h1>
+
+                <div class="grid-list">
+                    {% for course in courses %}
+                        <div class="grid-list__item">
+                            {% include 'partials/courseCard.html' %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
