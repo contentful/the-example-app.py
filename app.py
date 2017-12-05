@@ -7,6 +7,7 @@ from flask_sslify import SSLify
 from dotenv import load_dotenv
 
 from i18n.i18n import I18n
+from lib.entry_state import should_show_entry_state
 
 from routes.base import before_request, format_meta_title
 from routes.errors import pretty_json
@@ -67,6 +68,7 @@ app.register_blueprint(settings)
 
 # Register Helpers
 app.add_template_global(format_meta_title)
+app.add_template_global(should_show_entry_state)
 app.add_template_filter(pretty_json)
 
 

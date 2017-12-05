@@ -1,9 +1,7 @@
 <div class="lesson">
     <h1 class="lesson__title">{{ lesson.title }}</h1>
 
-    {#
-    {% include 'partials/editorialFeatures.html' %}
-    #}
+    {% call editorial_features(lesson) %}{% endcall %}
 
     <div class="lesson__modules">
         {% for module in lesson.modules %}

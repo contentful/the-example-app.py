@@ -8,6 +8,8 @@ from routes.base import contentful, \
                         raw_breadcrumbs, \
                         VIEWS_PATH
 from lib.breadcrumbs import refine
+from lib.entry_state import should_attach_entry_state, \
+                            attach_entry_state
 from routes.errors import wrap_errors
 from i18n.i18n import translate
 
@@ -21,7 +23,9 @@ def show_courses():
     courses = contentful().courses(api_id(), locale().code)
     categories = contentful().categories(api_id(), locale().code)
 
-    # TODO: Attach entry state
+    if should_attach_entry_state():
+        for course in courses:
+            attach_entry_state(course)
 
     return render_with_globals(
         'courses',
@@ -60,7 +64,9 @@ def show_courses_by_category(category_slug):
         locale().code
     )
 
-    # TODO: Attach entry state
+    if should_attach_entry_state():
+        for course in courses:
+            attach_entry_state(course)
 
     return render_with_globals(
         'courses',
@@ -82,7 +88,8 @@ def find_courses_by_slug(slug):
         visited_lessons.append(course.id)
     session['visited_lessons'] = visited_lessons
 
-    # TODO: Attach entry state
+    if should_attach_entry_state():
+        attach_entry_state(course)
 
     return render_with_globals(
         'course',
@@ -124,7 +131,9 @@ def find_lesson_by_slug(course_slug, lesson_slug):
 
     next_lesson = find_next_lesson(lessons, lesson.slug)
 
-    # TODO: Attach entry state
+    if should_attach_entry_state():
+        attach_entry_state(course)
+        attach_entry_state(lesson)
 
     return render_with_globals(
         'course',

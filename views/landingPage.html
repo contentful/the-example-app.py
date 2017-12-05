@@ -7,11 +7,9 @@
         </div>
     {% endif %}
 
-    {#
     <div class="layout-centered">
-        {% include 'partials/editorialFeatures.html' with {entry: landing_page} only %}
+        {% call editorial_features(landing_page) %}{% endcall %}
     </div>
-    #}
 
     <div class="modules-container">
         {% for module in landing_page.content_modules %}

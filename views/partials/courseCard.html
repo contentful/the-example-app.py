@@ -11,11 +11,9 @@
 
     <h2 class="course-card__title">
         <a href="/courses/{{ course.slug }}{{ query_string }}">{{ course.title }}</a>
-        {#
-            {% if state.api == 'cpa' and (course.draft or course.pendingChanges) %}
-                {% include 'partials/entryState.html.twig' with {entry: course} only %}
-            {% endif %}
-        #}
+        {% if current_api['id'] == 'cpa' and (course.draft or course.pendingChanges) %}
+            {% call editorial_features(course) %}{% endcall %}
+        {% endif %}
     </h2>
 
     <p class="course-card__description">{{ course.short_description }}</p>

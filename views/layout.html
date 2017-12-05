@@ -1,3 +1,45 @@
+{% macro entry_state(entry) -%}
+  {% if entry.draft %}
+      <div class="pill pill--draft">
+          {{ 'draftLabel'|trans }}
+      </div>
+  {% endif %}
+
+  {% if entry.pending_changes %}
+      <div class="pill pill--draft">
+          {{ 'pendingChangesLabel'|trans }}
+      </div>
+  {% endif %}
+{%- endmacro %}
+
+{% macro editorial_features(entry) -%}
+  {% if editorial_features %}
+      <div class="editorial-features">
+          {% if should_show_entry_state(entry) %}
+              <div class="editorial-features__item">
+                {% call entry_state(entry) %}{% endcall %}
+              </div>
+          {% endif %}
+
+          <div class="editorial-features__item">
+              <a
+                  href="https://app.contentful.com/spaces/{{ space_id }}/entries/{{ entry.id }}"
+                  class="editorial-features__text"
+                  target="_blank"
+                  rel="noopener"
+              >{{ 'editInTheWebAppLabel'|trans }}</a>
+
+              <div class="editorial-features__hint-wrapper">
+                  <svg class="editorial-features__hint-icon">
+                      <use xlink:href="{{ url_for('static', filename='/icons/icons.svg') }}#info" />
+                      <div class="editorial-features__hint-message">{{ 'editorialFeaturesHint'|trans }}</div>
+                  </svg>
+              </div>
+          </div>
+      </div>
+  {% endif %}
+{%- endmacro %}
+
 {% block layout -%}
 <!DOCTYPE html>
     <html>
