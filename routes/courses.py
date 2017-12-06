@@ -23,7 +23,7 @@ def show_courses():
     courses = contentful().courses(api_id(), locale().code)
     categories = contentful().categories(api_id(), locale().code)
 
-    if should_attach_entry_state():
+    if should_attach_entry_state(api_id(), session):
         for course in courses:
             attach_entry_state(course)
 
@@ -40,7 +40,7 @@ def show_courses():
 
 @courses.route('/courses/categories')
 def courses_categories_route():
-    return redirect(url_for('show_courses'))
+    return redirect(url_for('courses.show_courses'))
 
 
 @courses.route('/courses/categories/<category_slug>')
@@ -64,7 +64,7 @@ def show_courses_by_category(category_slug):
         locale().code
     )
 
-    if should_attach_entry_state():
+    if should_attach_entry_state(api_id(), session):
         for course in courses:
             attach_entry_state(course)
 
@@ -88,7 +88,7 @@ def find_courses_by_slug(slug):
         visited_lessons.append(course.id)
     session['visited_lessons'] = visited_lessons
 
-    if should_attach_entry_state():
+    if should_attach_entry_state(api_id(), session):
         attach_entry_state(course)
 
     return render_with_globals(
@@ -105,7 +105,7 @@ def find_courses_by_slug(slug):
 
 @courses.route('/courses/<slug>/lessons')
 def course_by_slug_lessons_route(slug):
-    return redirect(url_for('find_courses_by_slug', slug=slug))
+    return redirect(url_for('courses.find_courses_by_slug', slug=slug))
 
 
 @courses.route('/courses/<course_slug>/lessons/<lesson_slug>')
@@ -131,7 +131,7 @@ def find_lesson_by_slug(course_slug, lesson_slug):
 
     next_lesson = find_next_lesson(lessons, lesson.slug)
 
-    if should_attach_entry_state():
+    if should_attach_entry_state(api_id(), session):
         attach_entry_state(course)
         attach_entry_state(lesson)
 

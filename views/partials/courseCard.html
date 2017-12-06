@@ -12,7 +12,7 @@
     <h2 class="course-card__title">
         <a href="/courses/{{ course.slug }}{{ query_string }}">{{ course.title }}</a>
         {% if current_api['id'] == 'cpa' and (course.draft or course.pendingChanges) %}
-            {% call editorial_features(course) %}{% endcall %}
+            {{ render_editorial_features(course) }}
         {% endif %}
     </h2>
 

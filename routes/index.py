@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, session
 
 from routes.base import locale, \
                         api_id, \
@@ -20,7 +20,7 @@ index = Blueprint('index', __name__, template_folder=VIEWS_PATH)
 def show_index():
     landing_page = contentful().landing_page('home', api_id(), locale().code)
 
-    if should_attach_entry_state():
+    if should_attach_entry_state(api_id(), session):
         attach_entry_state(landing_page)
 
     return render_with_globals(

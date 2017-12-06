@@ -10,7 +10,9 @@ def I18n(app):
     if TRANSLATIONS:
         return
 
-    locales_path = os.path.join(os.path.dirname(__file__), '..', 'public', 'locales', 'json')
+    locales_path = os.path.join(
+        os.path.dirname(__file__), '..', 'public', 'locales', 'json'
+    )
 
     try:
         for file_name in glob.glob(os.path.join(locales_path, '*.json')):

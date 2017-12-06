@@ -1,29 +1,25 @@
 {% extends "layout.html" %}
 
-{% macro render_label(key) -%}
-    <label for="input-{{ key }}">{{ caller() }}{{ '%s%s'|format(key, 'Label')|trans }}</label>
-{%- endmacro %}
-
 {% macro render_errors(errors) -%}
-{% for message in errors %}
-    <div class='form-item__error-wrapper'>
-        <svg class='form-item__error-icon'>
-            <use xlink:href='{{ url_for('static', filename='/icons/icons.svg') }}#error'></use>
-        </svg>
-        <div class='form-item__error-message'>
-            {{ message }}
+    {% for message in errors %}
+        <div class='form-item__error-wrapper'>
+            <svg class='form-item__error-icon'>
+                <use xlink:href='{{ url_for('static', filename='/icons/icons.svg') }}#error'></use>
+            </svg>
+            <div class='form-item__error-message'>
+                {{ message }}
+            </div>
         </div>
-    </div>
-{% endfor %}
+    {% endfor %}
 {%- endmacro %}
 
 {% block content %}
-    <div class='layout-centered-small'>
-        {% include 'partials/breadcrumb.html' %}
-        <h1>{{ title }}</h1>
-        <p>{{ 'settingsIntroLabel'|trans }}</p>
+<div class='layout-centered-small'>
+    {% include 'partials/breadcrumb.html' %}
+    <h1>{{ title }}</h1>
+    <p>{{ 'settingsIntroLabel'|trans }}</p>
 
-        {% if success %}
+    {% if success %}
         <div class='status-block status-block--success'>
             <svg class='status-block__icon status-block__icon--success'>
                 <use xlink:href='{{ url_for('static', filename='/icons/icons.svg') }}#success'></use>
@@ -34,12 +30,12 @@
                 </div>
             </div>
         </div>
-        {% endif %}
+    {% endif %}
 
-        {% if has_errors %}
+    {% if has_errors %}
         <div class='status-block status-block--error'>
             <svg class='status-block__icon status-block__icon--error'>
-                <use xlink:href='{{ url_for('static', filename='/icons/icons.svg) }}#error'></use>
+                <use xlink:href='{{ url_for('static', filename='/icons/icons.svg') }}#error'></use>
             </svg>
 
             <div class='status-block__content'>
@@ -51,9 +47,9 @@
                 </div>
             </div>
         </div>
-        {% endif %}
+    {% endif %}
 
-        {% if space and not has_errors %}
+    {% if space and not has_errors %}
         <div class='status-block status-block--info'>
             <svg class='status-block__icon status-block__icon--info'>
                 <use xlink:href='{{ url_for('static', filename='/icons/icons.svg') }}#info'></use>
@@ -64,58 +60,58 @@
                 </div>
             </div>
         </div>
-        {% endif %}
+    {% endif %}
 
-        <form action="/settings" method="POST" class="form">
-            <div class='form-item'>
-                <label for="input-spaceId">{{ 'spaceIdLabel'|trans }}</label>
-                <input type="text" name="spaceId" id="input-spaceId" value='{{ space_id }}' />
+    <form action="/settings" method="POST" class="form">
+        <div class='form-item'>
+            <label for="input-spaceId">{{ 'spaceIdLabel'|trans }}</label>
+            <input type="text" name="spaceId" id="input-spaceId" value='{{ space_id }}' />
 
-                {% if 'spaceId' in errors %}
-                {% call render_errors(errors['spaceId']) %}{% endcall %}
-                {% endif %}
-                <div class='form-item__help-text'>
-                    {{ 'spaceIdHelpText'|trans }}
-                </div>
+            {% if 'spaceId' in errors %}
+                {{ render_errors(errors['spaceId']) }}
+            {% endif %}
+            <div class='form-item__help-text'>
+                {{ 'spaceIdHelpText'|trans }}
             </div>
+        </div>
 
-            <div class='form-item'>
-                <label for="input-deliveryToken">Content Delivery API - {{ 'accessTokenLabel'|trans }}</label>
-                <input type="text" name="deliveryToken" id="input-deliveryToken" value='{{ delivery_token }}' />
-                {% if 'deliveryToken' in errors %}
-                {% call render_errors(errors['deliveryToken']) %}{% endcall %}
-                {% endif %}
+        <div class='form-item'>
+            <label for="input-deliveryToken">Content Delivery API - {{ 'accessTokenLabel'|trans }}</label>
+            <input type="text" name="deliveryToken" id="input-deliveryToken" value='{{ delivery_token }}' />
+            {% if 'deliveryToken' in errors %}
+                {{ render_errors(errors['deliveryToken']) }}
+            {% endif %}
 
-                <div class='form-item__help-text'>
-                    {{ 'contentDeliveryApiHelpText'|trans }}&nbsp;
-                    <a href='https://www.contentful.com/developers/docs/references/content-delivery-api/' target='_blank' rel='noopener'>Content Delivery API.</a>
-                </div>
+            <div class='form-item__help-text'>
+                {{ 'contentDeliveryApiHelpText'|trans }}&nbsp;
+                <a href='https://www.contentful.com/developers/docs/references/content-delivery-api/' target='_blank' rel='noopener'>Content Delivery API.</a>
             </div>
+        </div>
 
-            <div class='form-item'>
-                <label for="input-previewToken">Content Preview API - {{ 'accessTokenLabel'|trans }}</label>
-                <input type="text" name="previewToken" id="input-previewToken" value='{{ preview_token }}' />
-                {% if 'previewToken' in errors %}
-                {% call render_errors(errors['previewToken']) %}{% endcall %}
-                {% endif %}
+        <div class='form-item'>
+            <label for="input-previewToken">Content Preview API - {{ 'accessTokenLabel'|trans }}</label>
+            <input type="text" name="previewToken" id="input-previewToken" value='{{ preview_token }}' />
+            {% if 'previewToken' in errors %}
+                {{ render_errors(errors['previewToken']) }}
+            {% endif %}
 
-                <div class='form-item__help-text'>
-                    {{ 'contentPreviewApiHelpText'|trans }}&nbsp;
-                    <a href='https://www.contentful.com/developers/docs/references/content-preview-api/' target='_blank' rel='noopener'>Content Preview API.</a>
-                </div>
+            <div class='form-item__help-text'>
+                {{ 'contentPreviewApiHelpText'|trans }}&nbsp;
+                <a href='https://www.contentful.com/developers/docs/references/content-preview-api/' target='_blank' rel='noopener'>Content Preview API.</a>
             </div>
+        </div>
 
-            <div class='form-item'>
-                <input type="checkbox" name="editorialFeatures" id="input-editorialFeatures" checked={{ 'true' if editorialFeatures else 'false' }} />
-                <label for="input-editorialFeatures">{{ 'enableEditorialFeaturesLabel'|trans }}</label>
-                <div class='form-item__help-text'>
-                    {{ 'enableEditorialFeaturesHelpText'|trans }}
-                </div>
+        <div class='form-item'>
+            <input type="checkbox" name="editorialFeatures" id="input-editorialFeatures" {{ 'checked' if editorial_features else '' }} />
+            <label for="input-editorialFeatures">{{ 'enableEditorialFeaturesLabel'|trans }}</label>
+            <div class='form-item__help-text'>
+                {{ 'enableEditorialFeaturesHelpText'|trans }}
             </div>
+        </div>
 
-            <div class='form-item'>
-                <input class='cta' type="submit" value='{{ 'saveSettingsButtonLabel'|trans }}' />
-            </div>
-        </form>
-    </div>
+        <div class='form-item'>
+            <input class='cta' type="submit" value='{{ 'saveSettingsButtonLabel'|trans }}' />
+        </div>
+    </form>
+</div>
 {% endblock %}

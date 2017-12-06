@@ -1,7 +1,7 @@
 <div class="lesson">
     <h1 class="lesson__title">{{ lesson.title }}</h1>
 
-    {% call editorial_features(lesson) %}{% endcall %}
+    {{ render_editorial_features(lesson) }}
 
     <div class="lesson__modules">
         {% for module in lesson.modules %}

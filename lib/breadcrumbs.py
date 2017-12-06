@@ -9,14 +9,14 @@ def breadcrumbs(path, locale_code):
         'label': translate('homeLabel', locale_code)
     })
 
-    parts = path.split('/')[1:-1]
+    parts = path.split('/')[1:]
 
     for index, part in enumerate(parts):
         label = part.replace('-', ' ')
         if is_translation_available('{0}Label'.format(label), locale_code):
             label = translate('{0}Label'.format(label), locale_code)
 
-        path = '/'.join(parts[0:index])
+        path = '/'.join(parts[0:index + 1])
 
         crumbs.append({
             'url': '/{0}'.format(path),

@@ -22,15 +22,20 @@ def before_request():
     update_session_for('space_id')
     update_session_for('delivery_token')
     update_session_for('preview_token')
-    update_session_for('editorial_features')
+    update_session_for(
+        'editorial_features',
+        None,
+        lambda value: value == 'true'
+    )
 
 
-def update_session_for(key, with_value=None):
+def update_session_for(key, with_value=None, coercion=None):
     if key in request.args:
         if with_value is None:
-            session[key] = request.args[key]
-        else:
-            session[key] = with_value
+            with_value = request.args[key]
+        if coercion is not None:
+            with_value = coercion(with_value)
+        session[key] = with_value
 
 
 def contentful():

@@ -12,12 +12,12 @@
   {% endif %}
 {%- endmacro %}
 
-{% macro editorial_features(entry) -%}
+{% macro render_editorial_features(entry) -%}
   {% if editorial_features %}
       <div class="editorial-features">
-          {% if should_show_entry_state(entry) %}
+          {% if should_show_entry_state(entry, current_api['id']) %}
               <div class="editorial-features__item">
-                {% call entry_state(entry) %}{% endcall %}
+                {{ entry_state(entry) }}
               </div>
           {% endif %}
 
