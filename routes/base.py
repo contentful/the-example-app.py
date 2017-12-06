@@ -23,7 +23,7 @@ def before_request():
     update_session_for('delivery_token')
     update_session_for('preview_token')
     update_session_for(
-        'editorial_features',
+        'enable_editorial_features',
         None,
         lambda value: value == 'true'
     )
@@ -93,7 +93,7 @@ def query_string():
         'space_id',
         'delivery_token',
         'preview_token',
-        'editorial_features'
+        'enable_editorial_features'
     ]
     args = {k: v for k, v
             in request.args.items()
@@ -131,7 +131,7 @@ def render_with_globals(template_name, **params):
         'current_path': request.path,
         'query_string': query_string(),
         'breadcrumbs': raw_breadcrumbs(),
-        'editorial_features': session.get('editorial_features', False),
+        'editorial_features': session.get('enable_editorial_features', False),
         'space_id': session.get(
             'space_id',
             environ.get('CONTENTFUL_SPACE_ID', None)

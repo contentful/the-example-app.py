@@ -30,7 +30,7 @@ class MockService(object):
 
 class Session(dict):
     def __init__(self, editorial_features=False):
-        self['editorial_features'] = editorial_features
+        self['enable_editorial_features'] = editorial_features
 
 
 class EntryStateTest(TestCase):

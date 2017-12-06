@@ -35,9 +35,15 @@ app = Flask(
 # Set app environment
 app.debug = os.environ.get('APP_ENV', 'development') != 'production'
 
-# Register session secret
+# Register session secret and properties
 # This will purposely fail if not found
-app.secret_key = os.environ['SESSION_SECRET']
+app.config['SECRET_KEY'] = os.environ['SESSION_SECRET']
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['REMEMBER_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['REMEMBER_COOKIE_HTTPONLY'] = True
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=2)
+app.config['SESSION_REFRESH_EACH_REQUEST'] = True
 
 
 # Set session timeout to 2 days
@@ -45,7 +51,6 @@ app.secret_key = os.environ['SESSION_SECRET']
 @app.before_request
 def set_session_timeout():
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(days=2)
 
 
 # Register Markdown engine

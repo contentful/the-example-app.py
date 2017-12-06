@@ -29,3 +29,6 @@ class IntegrationTestBase(TestCase):
 
     def assertNotFound(self, response):
         self._assertStatusCode(404, response)
+
+    def assertConflict(self, response):
+        self._assertStatusCode(409, response)

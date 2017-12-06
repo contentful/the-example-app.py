@@ -38,3 +38,13 @@ class AppTest(IntegrationTestBase):
 
     def test_imprint(self):
         self.assertSuccess(self.app.get('/imprint'))
+
+    def test_editorial_features_are_shown_if_editorial_features_are_enabled(self):
+        self.assertIn(b'Edit in the Contentful web app', self.app.get('/?enable_editorial_features=true').data)
+
+    def test_query_strings_are_sanitized_to_only_include_locale_and_api(self):
+        response = self.app.get('/?api=cpa&locale=en-US&enable_editorial_features=true').data
+        self.assertIn(b'/courses?api=cpa&amp;locale=en-US', response)
+
+        # Doesn't add additional parameters
+        self.assertNotIn(b'/courses?api=cpa&amp;locale=en-US&amp;', response)
