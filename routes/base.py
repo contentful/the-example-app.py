@@ -143,7 +143,8 @@ def render_with_globals(template_name, **params):
         'preview_token': session.get(
             'preview_token',
             environ.get('CONTENTFUL_PREVIEW_TOKEN', None)
-        )
+        ),
+        'environ': environ
     }
     global_parameters.update(params)
 

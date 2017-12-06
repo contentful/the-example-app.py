@@ -274,7 +274,9 @@
 
             <script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
 
-            <!--ANALYTICS-->
+            {% if environ.get('HEROKU', False) %}
+              {% include 'partials/vendor/analytics.html' %}
+            {% endif %}
         </body>
     </html>
 {%- endblock %}
