@@ -8,10 +8,14 @@ from lib.entry_state import attach_entry_state, \
 
 
 class MockEntry(object):
-    def __init__(self, entry_id, updated_at='mock_updated_at', published_at='mock_published_at'):
+    def __init__(self, entry_id, updated_at='mock_updated_at', published_at='mock_published_at', fields=None):
         self.id = entry_id
         self.updated_at = updated_at
         self.published_at = published_at
+        self._fields = fields if fields is not None else {}
+
+    def fields(self):
+        return self._fields
 
 
 class MockService(object):

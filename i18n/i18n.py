@@ -7,6 +7,11 @@ TRANSLATIONS = {}
 
 
 def I18n(app):
+    """Initializes the I18n engine.
+
+    :param app: An object that answers to 'add_template_filter(fn)'.
+    """
+
     if TRANSLATIONS:
         return
 
@@ -28,11 +33,35 @@ def I18n(app):
 
 
 def trans(symbol):
+    """Translation filter for templates.
+    Fetches the current locale from the request.
+
+    :param symbol: String to be localized.
+    :return: Localized string.
+
+    Usage:
+
+        {{ 'coursesLabel'|trans }}
+        "Courses"
+    """
+
     from routes.base import locale
     return translate(symbol, locale().code)
 
 
 def translate(symbol, locale='en-US'):
+    """Translates a symbol for a given locale.
+
+    :param symbol: String to be localized.
+    :param locale: Locale file to look the localization at.
+    :return: Localized string.
+
+    Usage:
+
+        >>> translate('coursesLabel', 'en-US')
+        "Courses"
+    """
+
     locale_dict = TRANSLATIONS.get(locale, None)
     if locale_dict is None:
         return 'Localization file for {0} is not available'.format(locale)
@@ -45,4 +74,20 @@ def translate(symbol, locale='en-US'):
 
 
 def is_translation_available(symbol, locale='en-US'):
+    """Returns if a translation is available for the symbol in a given locale.
+
+    :param symbol: String to be localized.
+    :param locale: Locale file to look the localization at.
+    :return: True/False
+
+    Usage:
+
+        >>> is_translation_available('coursesLabel', 'en-US')
+        True
+        >>> is_translation_available('nonExistent', 'en-US')
+        False
+        >>> is_translation_available('coursesLabel', 'non-Existent')
+        False
+    """
+
     return bool(TRANSLATIONS.get(locale, {}).get(symbol, False))

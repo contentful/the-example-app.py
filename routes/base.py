@@ -19,26 +19,39 @@ DEFAULT_LOCALE = Locale({
 
 
 def before_request():
+    """Updates session with values coming from the query string if present."""
+
     update_session_for('space_id')
     update_session_for('delivery_token')
     update_session_for('preview_token')
     update_session_for(
         'enable_editorial_features',
-        None,
-        lambda value: value == 'true'
+        coercion=lambda value: value == 'true'
     )
 
 
 def update_session_for(key, with_value=None, coercion=None):
+    """Updates session.
+
+    :param key: Session key to update. If no 'with_value' sent,
+                looks for that value in the query string.
+    :param with_value: Value to store in the session.
+    :param coercion: Coercion to apply to the value before storing.
+    """
+
     if key in request.args:
         if with_value is None:
             with_value = request.args[key]
         if coercion is not None:
             with_value = coercion(with_value)
+
+    if with_value is not None:
         session[key] = with_value
 
 
 def contentful():
+    """Returns an instance of the Contentful service with the found credentials."""
+
     return Contentful.instance(
         session.get(
             'space_id',
@@ -56,6 +69,8 @@ def contentful():
 
 
 def locales():
+    """Returns the list of available locales."""
+
     try:
         return contentful().space(api_id).locales
     except HTTPError:
@@ -63,6 +78,8 @@ def locales():
 
 
 def locale():
+    """Returns the currently selected locale."""
+
     try:
         for locale in locales():
             if locale.code == request.args.get('locale', DEFAULT_LOCALE_CODE):
@@ -72,10 +89,13 @@ def locale():
 
 
 def api_id():
+    """Returns the currently selected API ID."""
+
     return request.args.get('api', DEFAULT_API)
 
 
 def current_api():
+    """Returns the currently selected API data."""
     return {
         'cda': {
             'label': translate('contentDeliveryApiLabel', locale().code),
@@ -89,6 +109,8 @@ def current_api():
 
 
 def query_string():
+    """Returns a sanitized query string."""
+
     rejected_keys = [
         'space_id',
         'delivery_token',
@@ -110,10 +132,18 @@ def query_string():
 
 
 def raw_breadcrumbs():
+    """Returns the breadcrumbs for the current request."""
+
     return breadcrumbs(request.path, locale().code)
 
 
 def format_meta_title(title, locale):
+    """Formats the title and localizes it.
+
+    :param title: Current page title.
+    :param locale: Desired locale.
+    :return: Localized formatted string.
+    """
     if not title:
         return translate('defaultTitle', locale)
     return "{0} - {1}".format(
@@ -123,6 +153,13 @@ def format_meta_title(title, locale):
 
 
 def render_with_globals(template_name, **params):
+    """Renders the desired template with the shared state included.
+
+    :param template_name: Name of the template to render.
+    :param params: Additional state to send to the template.
+    :return: Rendered template.
+    """
+
     global_parameters = {
         'title': None,
         'locales': locales(),
