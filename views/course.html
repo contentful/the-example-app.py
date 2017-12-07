@@ -24,7 +24,7 @@
                         {% for course_lesson in course.lessons %}
                             <div class="table-of-contents__item">
                                 <a
-                                    href="/courses/{{ course.slug }}/lessons/{{ lesson.slug }}{{ query_string }}"
+                                    href="/courses/{{ course.slug }}/lessons/{{ course_lesson.slug }}{{ query_string }}"
                                     class="table-of-contents__link {{ 'visited' if course_lesson.id in visited_lessons else '' }} {{ 'active' if lesson and course_lesson.id == lesson.id else '' }}"
                                     >{{ course_lesson.title }}</a>
                             </div>
