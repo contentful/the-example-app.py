@@ -42,8 +42,6 @@ app.config['SESSION_COOKIE_SECURE'] = True
 app.config['REMEMBER_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['REMEMBER_COOKIE_HTTPONLY'] = True
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=2)
-app.config['SESSION_REFRESH_EACH_REQUEST'] = True
 
 
 # Set session timeout to 2 days
@@ -51,6 +49,7 @@ app.config['SESSION_REFRESH_EACH_REQUEST'] = True
 @app.before_request
 def set_session_timeout():
     session.permanent = True
+    app.permanent_session_lifetime = timedelta(days=2)
 
 
 # Register Markdown engine
