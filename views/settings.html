@@ -62,7 +62,7 @@
         </div>
     {% endif %}
 
-    <form action="/settings" method="POST" class="form">
+    <form action="/settings{{ query_string }}" method="POST" class="form">
         <div class='form-item'>
             <label for="input-spaceId">{{ 'spaceIdLabel'|trans }}</label>
             <input type="text" name="spaceId" id="input-spaceId" value='{{ space_id }}' />
