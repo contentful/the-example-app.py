@@ -113,7 +113,7 @@
                                                     <span class="header__controls_button_help">{{ 'contentDeliveryApiHelp'|trans }}</span>
                                                 </button>
                                                 <button
-                                                    class="header__controls_button {{ '' if current_api['id'] != 'cda' else 'header__controls_button--active' }}"
+                                                    class="header__controls_button {{ 'header__controls_button--active' if current_api['id'] == 'cpa' else '' }}"
                                                     type="submit"
                                                     name="api"
                                                     value="cpa"
