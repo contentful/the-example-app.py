@@ -26,7 +26,7 @@ def before_request():
     update_session_for('preview_token')
     update_session_for(
         'enable_editorial_features',
-        coercion=lambda value: value == 'true'
+        coercion=lambda value: value is not None
     )
 
 

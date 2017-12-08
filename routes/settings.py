@@ -1,4 +1,5 @@
-from flask import Blueprint, request
+from os import environ
+from flask import Blueprint, request, session
 from contentful.errors import HTTPError
 
 from routes.base import locale, \
@@ -26,7 +27,8 @@ def show_settings():
         errors={},
         has_errors=False,
         success=False,
-        space=space
+        space=space,
+        is_using_custom_credentials=is_using_custom_credentials(session)
     )
 
 
@@ -61,8 +63,29 @@ def save_settings():
         errors=errors,
         has_errors=bool(errors),
         success=not bool(errors),
-        space=space
+        space=space,
+        is_using_custom_credentials=is_using_custom_credentials(session)
     ), 201 if not errors else 409
+
+@settings.route('/settings/reset', methods=['POST'])
+@wrap_errors
+def reset_settings():
+    update_session_for('space_id', None)
+    update_session_for('delivery_token', None)
+    update_session_for('preview_token', None)
+    update_session_for('enable_editorial_features', None)
+
+    space = contentful().space(api_id())
+
+    return render_with_globals(
+        'settings',
+        title=translate('settingsLabel', locale().code),
+        errors={},
+        has_errors=False,
+        success=False,
+        space=space,
+        is_using_custom_credentials=is_using_custom_credentials(session)
+    )
 
 
 def check_field_required(errors, element, field_name):
@@ -110,3 +133,17 @@ def validate_space_token_combination(
                 token_field,
                 translate('somethingWentWrongLabel', locale().code)
             )
+
+def is_using_custom_credentials(session):
+    session_space_id = session.get('space_id', None)
+    session_delivery_token = session.get('delivery_token', None)
+    session_preview_token = session.get('preview_token', None)
+
+    return (
+        session_space_id is not None and
+        session_space_id != environ['CONTENTFUL_SPACE_ID'] and
+        session_delivery_token is not None and
+        session_delivery_token != environ['CONTENTFUL_DELIVERY_TOKEN'] and
+        session_preview_token is not None and
+        session_preview_token != environ['CONTENTFUL_PREVIEW_TOKEN']
+    )

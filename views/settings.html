@@ -54,11 +54,50 @@
             <svg class='status-block__icon status-block__icon--info'>
                 <use xlink:href='{{ url_for('static', filename='/icons/icons.svg') }}#info'></use>
             </svg>
-            <div class='status-block__content'>
-                <div class='status-block__message'>
-                    {{ 'connectedToSpaceLabel'|trans }} "{{ space.name }}"
+
+            {% if not is_using_custom_credentials %}
+                <div class="status-block__content">
+                    <div class="status-block__message">
+                        <p>
+                            <em>{{ "usingServerCredentialsLabel"|trans }}</em>
+                        </p>
+                        <p>
+                            <strong>{{ "connectedToSpaceLabel"|trans }}:</strong><br />
+                            {{ space.name }} ({{ space_id }})
+                        </p>
+                        <p>
+                            <strong>{{ "credentialSourceLabel"|trans }}:</strong><br />
+                            {{ "loadedFromLocalFileLabel"|trans }} <a href="https://github.com/contentful/the-example-app.py/blob/master/.env" target="_blank" rel="noopener">.env</a>
+                        </p>
+                        <p>
+                            <em>{{ "overrideConfigLabel"|trans }}</em>
+                        </p>
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <div class="status-block__content">
+                    <div class="status-block__message">
+                        <p>
+                            <em>{{ "usingSessionCredentialsLabel"|trans }}</em>
+                        </p>
+                        <p>
+                            <strong>{{ "connectedToSpaceLabel"|trans }}:</strong><br />
+                            {{ space.name }} ({{ space_id }})
+                        </p>
+
+                        <form method="post" action="/settings/reset{{ query_string }}">
+                            <p>
+                                <strong>{{ "applicationCredentialsLabel"|trans }}:</strong><br />
+                                <button type="submit">{{ "resetCredentialsLabel"|trans }}</button><br />
+                                <a class="status-block__sharelink" href="/{{ query_string if query_string else '?' }}space_id={{ space_id }}&preview_token={{ preview_token }}&delivery_token={{ delivery_token }}{{ '&enable_editorial_features' if editorial_features else '' }}">{{ "copyLinkLabel"|trans }}</a>
+                            </p>
+                        </form>
+                        <p>
+                            <em>{{ "overrideConfigLabel"|trans }}</em>
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     {% endif %}
 
@@ -68,7 +107,7 @@
             <input type="text" name="spaceId" id="input-spaceId" value='{{ space_id }}' />
 
             {% if 'spaceId' in errors %}
-                {{ render_errors(errors['spaceId']) }}
+            {{ render_errors(errors['spaceId']) }}
             {% endif %}
             <div class='form-item__help-text'>
                 {{ 'spaceIdHelpText'|trans }}
@@ -79,7 +118,7 @@
             <label for="input-deliveryToken">Content Delivery API - {{ 'accessTokenLabel'|trans }}</label>
             <input type="text" name="deliveryToken" id="input-deliveryToken" value='{{ delivery_token }}' />
             {% if 'deliveryToken' in errors %}
-                {{ render_errors(errors['deliveryToken']) }}
+            {{ render_errors(errors['deliveryToken']) }}
             {% endif %}
 
             <div class='form-item__help-text'>
@@ -92,7 +131,7 @@
             <label for="input-previewToken">Content Preview API - {{ 'accessTokenLabel'|trans }}</label>
             <input type="text" name="previewToken" id="input-previewToken" value='{{ preview_token }}' />
             {% if 'previewToken' in errors %}
-                {{ render_errors(errors['previewToken']) }}
+            {{ render_errors(errors['previewToken']) }}
             {% endif %}
 
             <div class='form-item__help-text'>
