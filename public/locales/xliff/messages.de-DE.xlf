@@ -396,7 +396,7 @@
       </trans-unit>
       <trans-unit id="editInTheWebAppLabel">
         <source>editInTheWebAppLabel</source>
-        <target>In der Contentful Web App bearbeiten</target>
+        <target>In der Contentful web app bearbeiten</target>
       </trans-unit>
       <trans-unit id="error404Route">
         <source>error404Route</source>
