@@ -17,7 +17,7 @@ You can see a hosted version of `The Python example app` on <a href="https://the
 
 ## Requirements
 
-* Python 2.7+ (if running tests locally 3.3+ is required)
+* Python 2.7+ or 3.3+ (if running tests locally 3.3+ is required)
 * Git
 * Contentful CLI (only for write access)
 
