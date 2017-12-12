@@ -12,7 +12,7 @@ class AppTest(IntegrationTestBase):
         self.assertSuccess(self.app.get('/courses'))
 
     def test_courses_by_slug(self):
-        self.assertSuccess(self.app.get('/courses/hello-world'))
+        self.assertSuccess(self.app.get('/courses/hello-contentful'))
 
     def test_courses_categories_redirect(self):
         self.assertRedirect(self.app.get('/courses/categories'))
@@ -21,10 +21,10 @@ class AppTest(IntegrationTestBase):
         self.assertSuccess(self.app.get('/courses/categories/getting-started'))
 
     def test_course_lessons_redirect(self):
-        self.assertRedirect(self.app.get('/courses/hello-world/lessons'))
+        self.assertRedirect(self.app.get('/courses/hello-contentful/lessons'))
 
     def test_course_lesson(self):
-        self.assertSuccess(self.app.get('/courses/hello-world/lessons/architecture'))
+        self.assertSuccess(self.app.get('/courses/hello-contentful/lessons/architecture'))
 
     def test_get_settings(self):
         self.assertSuccess(self.app.get('/settings'))

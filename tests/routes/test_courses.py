@@ -11,7 +11,7 @@ class CoursesTest(IntegrationTestBase):
         self.assertIn(b'Getting started (1)', response.data)
 
     def test_renders_course_overview(self):
-        response = self.app.get('/courses/hello-world')
+        response = self.app.get('/courses/hello-contentful')
         data = response.data
 
         self.assertIn(b'Table of contents', data)
@@ -19,7 +19,7 @@ class CoursesTest(IntegrationTestBase):
         self.assertIn(b'Start course', data)
 
     def test_renders_lesson(self):
-        response = self.app.get('/courses/hello-world/lessons/architecture')
+        response = self.app.get('/courses/hello-contentful/lessons/architecture')
         self.assertIn(b'Go to the next lesson', response.data)
 
     # Errors
@@ -42,7 +42,7 @@ class CoursesTest(IntegrationTestBase):
         self.assertIn(b'Oops, something went wrong (404)', response.data)
 
     def test_404_on_unknown_lesson_slug_for_lessons(self):
-        response = self.app.get('/courses/hello-world/lessons/foobar')
+        response = self.app.get('/courses/hello-contentful/lessons/foobar')
 
         self.assertNotFound(response)
         self.assertIn(b'Oops, something went wrong (404)', response.data)
