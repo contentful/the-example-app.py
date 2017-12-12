@@ -38,17 +38,21 @@ app.debug = os.environ.get('APP_ENV', 'development') != 'production'
 # Register session secret and properties
 # This will purposely fail if not found
 app.secret_key = os.environ['SESSION_SECRET']
-app.config['SESSION_COOKIE_SECURE'] = True
+
+# On localhost, Secure cookies are not retrieved from the browser in newer
+# Chrome and Firefox versions. So to test, we need to disable secure cookies.
+app.config['SESSION_COOKIE_SECURE'] = not app.debug
 app.config['REMEMBER_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['REMEMBER_COOKIE_HTTPONLY'] = True
 
-
 # Set session timeout to 2 days
-# Session will refresh on each visit
-def set_session_timeout():
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=2)
+
+
+# Make session cookie-based
+def set_session_permanency():
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(days=2)
 
 
 # Register Markdown engine
@@ -62,7 +66,7 @@ app.config['PREFERRED_URL_SCHEME'] = 'https'
 I18n(app)
 
 # Assign Before Request Filters
-app.before_request(set_session_timeout)
+app.before_request(set_session_permanency)
 app.before_request(before_request)
 
 # Request Route Middleware
