@@ -70,10 +70,10 @@ def save_settings():
 @settings.route('/settings/reset', methods=['POST'])
 @wrap_errors
 def reset_settings():
-    update_session_for('space_id', None)
-    update_session_for('delivery_token', None)
-    update_session_for('preview_token', None)
-    update_session_for('enable_editorial_features', None)
+    session['space_id'] = None
+    session['delivery_token'] = None
+    session['preview_token'] = None
+    session['enable_editorial_features'] = None
 
     space = contentful().space(api_id())
 

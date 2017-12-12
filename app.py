@@ -37,7 +37,7 @@ app.debug = os.environ.get('APP_ENV', 'development') != 'production'
 
 # Register session secret and properties
 # This will purposely fail if not found
-app.config['SECRET_KEY'] = os.environ['SESSION_SECRET']
+app.secret_key = os.environ['SESSION_SECRET']
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['REMEMBER_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
