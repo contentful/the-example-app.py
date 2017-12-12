@@ -46,7 +46,6 @@ app.config['REMEMBER_COOKIE_HTTPONLY'] = True
 
 # Set session timeout to 2 days
 # Session will refresh on each visit
-@app.before_request
 def set_session_timeout():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(days=2)
@@ -57,11 +56,13 @@ Misaka(app)
 
 # Register HTTPS Extension
 SSLify(app)
+app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 # Register I18n engine
 I18n(app)
 
-# Assign Before Request Filter
+# Assign Before Request Filters
+app.before_request(set_session_timeout)
 app.before_request(before_request)
 
 # Request Route Middleware

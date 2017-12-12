@@ -89,7 +89,7 @@
                             <p>
                                 <strong>{{ "applicationCredentialsLabel"|trans }}:</strong><br />
                                 <button type="submit">{{ "resetCredentialsLabel"|trans }}</button><br />
-                                <a class="status-block__sharelink" href="/{{ query_string if query_string else '?' }}space_id={{ space_id }}&preview_token={{ preview_token }}&delivery_token={{ delivery_token }}{{ '&enable_editorial_features' if editorial_features else '' }}">{{ "copyLinkLabel"|trans }}</a>
+                                <a class="status-block__sharelink" href="/{{ "{0}&".format(query_string) if query_string else '?' }}space_id={{ space_id }}&preview_token={{ preview_token }}&delivery_token={{ delivery_token }}{{ '&enable_editorial_features' if editorial_features else '' }}">{{ "copyLinkLabel"|trans }}</a>
                             </p>
                         </form>
                         <p>

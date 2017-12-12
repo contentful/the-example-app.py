@@ -44,7 +44,6 @@ def update_session_for(key, with_value=None, coercion=None):
             with_value = request.args[key]
         if coercion is not None:
             with_value = coercion(with_value)
-
     if with_value is not None:
         session[key] = with_value
 
