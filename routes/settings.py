@@ -28,7 +28,8 @@ def show_settings():
         has_errors=False,
         success=False,
         space=space,
-        is_using_custom_credentials=is_using_custom_credentials(session)
+        is_using_custom_credentials=is_using_custom_credentials(session),
+        host=request.url_root
     )
 
 
@@ -64,7 +65,8 @@ def save_settings():
         has_errors=bool(errors),
         success=not bool(errors),
         space=space,
-        is_using_custom_credentials=is_using_custom_credentials(session)
+        is_using_custom_credentials=is_using_custom_credentials(session),
+        host=request.url_root
     ), 201 if not errors else 409
 
 @settings.route('/settings/reset', methods=['POST'])
@@ -84,7 +86,8 @@ def reset_settings():
         has_errors=False,
         success=False,
         space=space,
-        is_using_custom_credentials=is_using_custom_credentials(session)
+        is_using_custom_credentials=is_using_custom_credentials(session),
+        host=request.url_root
     )
 
 
