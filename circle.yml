@@ -11,8 +11,8 @@ dependencies:
 test:
   override:
     - make coverage
-    - make run
-        background: true
+    - make run:
+          background: true
     - sleep 5
     - ./test/e2e/node_modules/.bin/cypress run
   post:
