@@ -13,12 +13,14 @@
 
     <div class="modules-container">
         {% for module in landing_page.content_modules %}
-            {% if module.content_type.id == 'layoutCopy' %}
-                {% include 'partials/moduleCopy.html' %}
-            {% elif module.content_type.id == 'layoutHeroImage' %}
-                {% include 'partials/moduleHeroImage.html' %}
-            {% elif module.content_type.id == 'layoutHighlightedCourse' %}
-                {% include 'partials/moduleHighlightedCourse.html' %}
+            {% if module.sys.get('content_type', None) %}
+                {% if module.content_type.id == 'layoutCopy' %}
+                    {% include 'partials/moduleCopy.html' %}
+                {% elif module.content_type.id == 'layoutHeroImage' %}
+                    {% include 'partials/moduleHeroImage.html' %}
+                {% elif module.content_type.id == 'layoutHighlightedCourse' %}
+                    {% include 'partials/moduleHighlightedCourse.html' %}
+                {% endif %}
             {% endif %}
         {% endfor %}
     </div>
