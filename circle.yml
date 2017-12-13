@@ -5,7 +5,15 @@ machine:
 dependencies:
   pre:
     - pip install -r requirements.txt
+    - git clone https://github.com/contentful/the-example-app-e2e-tests.git ./test/e2e
+    - cd ./test/e2e && npm install
 
 test:
   override:
     - make coverage
+    - make run
+        background: true
+    - sleep 5
+    - ./test/e2e/node_modules/.bin/cypress run
+  post:
+    - tar -czf $CIRCLE_ARTIFACTS/cypress-result_`date +%Y-%m-%d_%H-%M-%S`.tar.gz ./cypress
