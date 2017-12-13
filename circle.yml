@@ -17,6 +17,6 @@ test:
           background: true
     - sleep 5
     - python warmup.py
-    - ./test/e2e/node_modules/.bin/cypress run
+    - ./test/e2e/node_modules/.bin/cypress run --spec ./test/e2e/specs/the-example-app-spec.js
   post:
     - tar -czf $CIRCLE_ARTIFACTS/cypress-result_`date +%Y-%m-%d_%H-%M-%S`.tar.gz ./cypress
