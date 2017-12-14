@@ -103,7 +103,7 @@ def has_pending_changes(preview_entry, delivery_entry):
 def sanitize_datetime(date):
     """In order to have a more accurate comparison due to minimal delays
     upon publishing entries. We strip milliseconds from the dates we compare.
-    
+
     :param date: datetime.datetime
     :return: datetime.datetime without milliseconds.
     """
