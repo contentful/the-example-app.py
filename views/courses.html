@@ -21,7 +21,7 @@
                         {% for category in categories %}
                             <li class="sidebar-menu__item">
                                 <a
-                                    href="/courses/categories/{{ category_slug }}{{ query_string }}"
+                                    href="/courses/categories/{{ category.slug }}{{ query_string }}"
                                     class="sidebar-menu__link {{ 'active' if current_category and current_category.id == category.id else '' }}"
                                     >{{ category.title }}</a>
                             </li>

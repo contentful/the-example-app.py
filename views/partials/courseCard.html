@@ -3,7 +3,7 @@
         {% if course.categories %}
             {% for category in course.categories %}
                 <div class="course-card__category">
-                    <a href="/courses/categories/{{ category.slug }}{{ query_string }}">{{ category.title }}</a>
+                    <a class="course-card__category-link" href="/courses/categories/{{ category.slug }}{{ query_string }}">{{ category.title }}</a>
                 </div>
             {% endfor %}
         {% endif %}
