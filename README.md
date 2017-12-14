@@ -1,3 +1,5 @@
+![CircleCI Token](https://circleci.com/gh/contentful/the-example-app.py.svg?style=shield)
+
 ## The Python example app
 
 The Python example app teaches the very basics of how to work with Contentful:
