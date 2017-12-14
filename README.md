@@ -1,6 +1,6 @@
-[![CircleCI](https://img.shields.io/circleci/project/github/contentful/the-example-app.py.svg)](https://circleci.com/gh/contentful/the-example-app.py)
-
 ## The Python example app
+
+[![CircleCI](https://img.shields.io/circleci/project/github/contentful/the-example-app.py.svg)](https://circleci.com/gh/contentful/the-example-app.py)
 
 The Python example app teaches the very basics of how to work with Contentful:
 
