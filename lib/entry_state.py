@@ -64,6 +64,7 @@ def known_resources_for(preview_entry, delivery_entry):
 
     return resources
 
+
 def find_matching_resource(preview_resource, delivery_entry, search_field):
     """Returns matching resource for a specific field.
 
@@ -86,11 +87,28 @@ def has_pending_changes(preview_entry, delivery_entry):
     :return: True/False
     """
 
-    return (
-        preview_entry is not None and
-        delivery_entry is not None and
-        preview_entry.updated_at != delivery_entry.updated_at
+    if preview_entry is None or delivery_entry is None:
+        return False
+
+    sanitized_preview_updated_at = sanitize_datetime(
+        preview_entry.updated_at
     )
+    sanitized_delivery_updated_at = sanitize_datetime(
+        delivery_entry.updated_at
+    )
+
+    return sanitized_preview_updated_at != sanitized_delivery_updated_at
+
+
+def sanitize_datetime(date):
+    """In order to have a more accurate comparison due to minimal delays
+    upon publishing entries. We strip milliseconds from the dates we compare.
+
+    :param date: datetime.datetime
+    :return: datetime.datetime without milliseconds.
+    """
+
+    return date.replace(microsecond=0)
 
 
 def should_show_entry_state(entry, current_api_id):
