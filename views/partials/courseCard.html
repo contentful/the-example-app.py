@@ -1,6 +1,6 @@
 <div class="course-card">
     <div class="course-card__categories">
-        {% if course.categories %}
+        {% if 'categories' in course.fields() %}
             {% for category in course.categories %}
                 <div class="course-card__category">
                     <a class="course-card__category-link" href="/courses/categories/{{ category.slug }}{{ query_string }}">{{ category.title }}</a>
@@ -11,8 +11,8 @@
 
     <h2 class="course-card__title">
         <a href="/courses/{{ course.slug }}{{ query_string }}">{{ course.title }}</a>
-        {% if current_api['id'] == 'cpa' and (course.draft or course.pendingChanges) %}
-            {{ render_editorial_features(course) }}
+        {% if should_show_entry_state(course, current_api['id']) %}
+            {{ entry_state(course) }}
         {% endif %}
     </h2>
 
