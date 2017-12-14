@@ -1,4 +1,4 @@
-[![CircleCI](https://img.shields.io/circleci/project/github/contentful/the-example-app.py.svg)]()
+[![CircleCI](https://img.shields.io/circleci/project/github/contentful/the-example-app.py.svg)](https://circleci.com/gh/contentful/the-example-app.py)
 
 ## The Python example app
 
