@@ -69,6 +69,7 @@ def save_settings():
         host=request.url_root
     ), 201 if not errors else 409
 
+
 @settings.route('/settings/reset', methods=['POST'])
 @wrap_errors
 def reset_settings():
@@ -136,6 +137,7 @@ def validate_space_token_combination(
                 token_field,
                 translate('somethingWentWrongLabel', locale().code)
             )
+
 
 def is_using_custom_credentials(session):
     session_space_id = session.get('space_id', None)

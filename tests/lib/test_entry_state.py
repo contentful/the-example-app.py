@@ -1,14 +1,16 @@
+import datetime
 from unittest import TestCase
 from contentful.errors import EntryNotFoundError
 
 from lib.entry_state import attach_entry_state, \
                             has_pending_changes, \
                             should_show_entry_state, \
-                            should_attach_entry_state
+                            should_attach_entry_state, \
+                            sanitize_datetime
 
 
 class MockEntry(object):
-    def __init__(self, entry_id, updated_at='mock_updated_at', published_at='mock_published_at', fields=None):
+    def __init__(self, entry_id, updated_at=datetime.datetime(2017, 12, 14), published_at=datetime.datetime(2017, 12, 14), fields=None):
         self.id = entry_id
         self.updated_at = updated_at
         self.published_at = published_at
@@ -59,7 +61,7 @@ class EntryStateTest(TestCase):
         self.assertFalse(has_pending_changes(MockEntry('id'), MockEntry('id')))
 
     def test_true_if_both_entries_have_different_updated_at_dates(self):
-        self.assertTrue(has_pending_changes(MockEntry('id'), MockEntry('id', updated_at='some_other_date')))
+        self.assertTrue(has_pending_changes(MockEntry('id'), MockEntry('id', updated_at=datetime.datetime(2017, 12, 16))))
 
     # should_show_entry_state
     def test_false_if_current_api_is_cda(self):
@@ -70,12 +72,20 @@ class EntryStateTest(TestCase):
 
     def test_true_if_current_api_is_cpa_and_entry_is_draft(self):
         entry = MockEntry('id')
-        attach_entry_state(entry, MockService(None, 'mock_updated_at'))
+        attach_entry_state(entry, MockService(None, datetime.datetime(2017, 12, 14)))
 
         self.assertTrue(should_show_entry_state(entry, 'cpa'))
 
     def test_true_if_current_api_is_cpa_and_entry_is_pending_changes(self):
         entry = MockEntry('id')
-        attach_entry_state(entry, MockService('mock_published_at', 'other_updated_at'))
+        attach_entry_state(entry, MockService(datetime.datetime(2017, 12, 14), datetime.datetime(2017, 12, 18)))
 
         self.assertTrue(should_show_entry_state(entry, 'cpa'))
+
+    # sanitize_datetime
+    def test_removes_milliseconds(self):
+        date = datetime.datetime(2017, 12, 14, 12, 30, 30, 123)
+
+        self.assertEqual("2017-12-14T12:30:30.000123", date.isoformat())
+
+        self.assertEqual("2017-12-14T12:30:30", sanitize_datetime(date).isoformat())
