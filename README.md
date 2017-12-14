@@ -10,7 +10,7 @@ The Python example app teaches the very basics of how to work with Contentful:
 
 The app demonstrates how decoupling content from its presentation enables greater flexibility and facilitates shipping higher quality software more quickly.
 
-<a href="https://the-example-app-py.herokuapp.com/" target="_blank"><img src="https://images.contentful.com/lo4pi5z0oso5/MdQ6EKp3eSes2WsyI8waO/56234c7ad01999b1aa371ebafd203e1d/Screen_Shot_2017-12-11_at_13.13.48.png" alt="Screenshot of the example app"/></a>
+<a href="https://the-example-app-py.herokuapp.com/" target="_blank"><img src="https://images.contentful.com/88dyiqcr7go8/4H3umATfSwOAW6eqOYaW0Q/9aa6880593a47a0c598ca447759b4c43/the-example-app-py.herokuapp.com.png" alt="Screenshot of the example app"/></a>
 
 You can see a hosted version of `The Python example app` on <a href="https://the-example-app-py.herokuapp.com/" target="_blank">Heroku</a>.
 
