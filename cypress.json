@@ -1,0 +1,11 @@
+{
+    "baseUrl": "http://localhost:3000",
+    "fixturesFolder": false,
+    "integrationFolder": "/home/ubuntu/test/e2e/specs/",
+    "supportFile": false,
+    "env": {
+        "CONTENTFUL_SPACE_ID": "qz0n5cdakyl9",
+        "CONTENTFUL_DELIVERY_TOKEN": "df2a18b8a5b4426741408fc95fa4331c7388d502318c44a5b22b167c3c1b1d03",
+        "CONTENTFUL_PREVIEW_TOKEN": "10145c6d864960fdca694014ae5e7bdaa7de514a1b5d7fd8bd24027f90c49bbc"
+    } 
+  }

@@ -1,11 +1,22 @@
 machine:
+  node:
+    version: "8"
   python:
     version: "3.6.3"
 
 dependencies:
   pre:
     - pip install -r requirements.txt
+#    - git clone https://github.com/contentful/the-example-app-e2e-tests.git ./test/e2e
+#    - cd ./test/e2e && npm install
 
 test:
   override:
     - make coverage
+#    - make run:
+#          background: true
+#    - sleep 5
+#    - python warmup.py
+#    - DEBUG=cypress:* ./test/e2e/node_modules/.bin/cypress run --spec ./test/e2e/specs/the-example-app-spec.js
+#  post:
+#    - tar -czf $CIRCLE_ARTIFACTS/cypress-result_`date +%Y-%m-%d_%H-%M-%S`.tar.gz ./cypress
