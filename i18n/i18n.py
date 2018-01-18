@@ -2,6 +2,7 @@ import json
 import os
 import glob
 
+from jinja2 import contextfilter
 
 TRANSLATIONS = {}
 
@@ -31,8 +32,8 @@ def I18n(app):
         print('Error loading localization files.')
         print(e)
 
-
-def trans(symbol):
+@contextfilter
+def trans(context, symbol):
     """Translation filter for templates.
     Fetches the current locale from the request.
 

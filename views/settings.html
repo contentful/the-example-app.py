@@ -103,20 +103,22 @@
 
     <form action="/settings{{ query_string }}" method="POST" class="form">
         <div class='form-item'>
-            <label for="input-spaceId">{{ 'spaceIdLabel'|trans }}</label>
-            <input type="text" name="spaceId" id="input-spaceId" value='{{ space_id }}' />
+            <label for="input-space-id">{{ 'spaceIdLabel'|trans }}</label>
+            <input type="text" name="spaceId" id="input-space-id" value='{{ space_id }}' required="required" />
 
             {% if 'spaceId' in errors %}
             {{ render_errors(errors['spaceId']) }}
             {% endif %}
+
             <div class='form-item__help-text'>
                 {{ 'spaceIdHelpText'|trans }}
             </div>
         </div>
 
         <div class='form-item'>
-            <label for="input-deliveryToken">Content Delivery API - {{ 'accessTokenLabel'|trans }}</label>
-            <input type="text" name="deliveryToken" id="input-deliveryToken" value='{{ delivery_token }}' />
+            <label for="input-delivery-token">{{ 'cdaAccessTokenLabel'|trans }}</label>
+            <input type="text" name="deliveryToken" id="input-delivery-token" value='{{ delivery_token }}' required="required" />
+
             {% if 'deliveryToken' in errors %}
             {{ render_errors(errors['deliveryToken']) }}
             {% endif %}
@@ -128,8 +130,9 @@
         </div>
 
         <div class='form-item'>
-            <label for="input-previewToken">Content Preview API - {{ 'accessTokenLabel'|trans }}</label>
-            <input type="text" name="previewToken" id="input-previewToken" value='{{ preview_token }}' />
+            <label for="input-preview-token">{{ 'cpaAccessTokenLabel'|trans }}</label>
+            <input type="text" name="previewToken" id="input-preview-token" value='{{ preview_token }}' required="required" />
+
             {% if 'previewToken' in errors %}
             {{ render_errors(errors['previewToken']) }}
             {% endif %}
@@ -141,8 +144,8 @@
         </div>
 
         <div class='form-item'>
-            <input type="checkbox" name="editorialFeatures" id="input-editorialFeatures" {{ 'checked' if editorial_features else '' }} />
-            <label for="input-editorialFeatures">{{ 'enableEditorialFeaturesLabel'|trans }}</label>
+            <input type="checkbox" name="editorialFeatures" id="input-editorial-features" {{ 'checked' if editorial_features else '' }} />
+            <label for="input-editorial-features">{{ 'enableEditorialFeaturesLabel'|trans }}</label>
             <div class='form-item__help-text'>
                 {{ 'enableEditorialFeaturesHelpText'|trans }}
             </div>
