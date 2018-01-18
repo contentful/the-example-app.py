@@ -8,7 +8,7 @@
     <div class="layout-sidebar">
         <section class="layout-sidebar__sidebar">
             <div class="layout-sidebar__sidebar-header">
-                <h2 class="layout-sidebar__sidebar-title">{{ 'tableOfContentsLabel'|trans }}</h2>
+                <h2 class="layout-sidebar__sidebar-title">{{ 'tableOfContentsLabel'|trans(current_locale.code) }}</h2>
             </div>
 
             <div class="layout-sidebar__sidebar-content">
@@ -18,7 +18,7 @@
                             <a
                                 href="/courses/{{ course.slug }}{{ query_string }}"
                                 class="table-of-contents__link {{ 'visited' if course.id in visited_lessons else '' }} {{ 'active' if not lesson else '' }}"
-                                >{{ 'courseOverviewLabel'|trans }}</a>
+                                >{{ 'courseOverviewLabel'|trans(current_locale.code) }}</a>
                         </div>
 
                         {% for course_lesson in course.lessons %}
@@ -44,7 +44,7 @@
                     {{ render_editorial_features(course) }}
 
                     <div class="course__overview">
-                        <h3 class="course__overview-title">{{ 'overviewLabel'|trans }}</h3>
+                        <h3 class="course__overview-title">{{ 'overviewLabel'|trans(current_locale.code) }}</h3>
 
                         {% if 'duration' in course.fields(current_locale.code) %}
                             <div class="course__overview-item">
@@ -53,7 +53,7 @@
                                 </svg>
 
                                 <div class="course__overview-value">
-                                    {{ 'durationLabel'|trans }}: {{ course.duration }} {{ 'minutesLabel'|trans }}
+                                    {{ 'durationLabel'|trans(current_locale.code) }}: {{ course.duration }} {{ 'minutesLabel'|trans(current_locale.code) }}
                                 </div>
                             </div>
                         {% endif %}
@@ -65,7 +65,7 @@
                                 </svg>
 
                                 <div class="course__overview-value">
-                                    {{ 'skillLevelLabel'|trans }}: {{ '%s%s'|format(course.skill_level, 'Label')|trans }}
+                                    {{ 'skillLevelLabel'|trans(current_locale.code) }}: {{ '%s%s'|format(course.skill_level, 'Label')|trans(current_locale.code) }}
                                 </div>
                             </div>
                         {% endif %}
@@ -74,7 +74,7 @@
                             <a
                                 href="/courses/{{ course.slug}}/lessons/{{ next_lesson.slug }}{{ query_string }}"
                                 class="course__overview-cta cta"
-                                >{{ 'startCourseLabel'|trans }}</a>
+                                >{{ 'startCourseLabel'|trans(current_locale.code) }}</a>
                         </div>
                     </div>
 

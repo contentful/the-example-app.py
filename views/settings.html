@@ -17,7 +17,7 @@
 <div class='layout-centered-small'>
     {% include 'partials/breadcrumb.html' %}
     <h1>{{ title }}</h1>
-    <p>{{ 'settingsIntroLabel'|trans }}</p>
+    <p>{{ 'settingsIntroLabel'|trans(current_locale.code) }}</p>
 
     {% if success %}
         <div class='status-block status-block--success'>
@@ -26,7 +26,7 @@
             </svg>
             <div class='status-block__content'>
                 <div class='status-block__title'>
-                    {{ 'changesSavedLabel'|trans }}
+                    {{ 'changesSavedLabel'|trans(current_locale.code) }}
                 </div>
             </div>
         </div>
@@ -40,10 +40,10 @@
 
             <div class='status-block__content'>
                 <div class='status-block__title'>
-                    {{ 'errorOcurredTitleLabel'|trans }}
+                    {{ 'errorOcurredTitleLabel'|trans(current_locale.code) }}
                 </div>
                 <div class='status-block__message'>
-                    {{ 'errorOcurredMessageLabel'|trans }}
+                    {{ 'errorOcurredMessageLabel'|trans(current_locale.code) }}
                 </div>
             </div>
         </div>
@@ -59,18 +59,18 @@
                 <div class="status-block__content">
                     <div class="status-block__message">
                         <p>
-                            <em>{{ "usingServerCredentialsLabel"|trans }}</em>
+                            <em>{{ "usingServerCredentialsLabel"|trans(current_locale.code) }}</em>
                         </p>
                         <p>
-                            <strong>{{ "connectedToSpaceLabel"|trans }}:</strong><br />
+                            <strong>{{ "connectedToSpaceLabel"|trans(current_locale.code) }}:</strong><br />
                             {{ space.name }} ({{ space_id }})
                         </p>
                         <p>
-                            <strong>{{ "credentialSourceLabel"|trans }}:</strong><br />
-                            {{ "loadedFromLocalFileLabel"|trans }} <a href="https://github.com/contentful/the-example-app.py/blob/master/.env" target="_blank" rel="noopener">.env</a>
+                            <strong>{{ "credentialSourceLabel"|trans(current_locale.code) }}:</strong><br />
+                            {{ "loadedFromLocalFileLabel"|trans(current_locale.code) }} <a href="https://github.com/contentful/the-example-app.py/blob/master/.env" target="_blank" rel="noopener">.env</a>
                         </p>
                         <p>
-                            <em>{{ "overrideConfigLabel"|trans }}</em>
+                            <em>{{ "overrideConfigLabel"|trans(current_locale.code) }}</em>
                         </p>
                     </div>
                 </div>
@@ -78,22 +78,22 @@
                 <div class="status-block__content">
                     <div class="status-block__message">
                         <p>
-                            <em>{{ "usingSessionCredentialsLabel"|trans }}</em>
+                            <em>{{ "usingSessionCredentialsLabel"|trans(current_locale.code) }}</em>
                         </p>
                         <p>
-                            <strong>{{ "connectedToSpaceLabel"|trans }}:</strong><br />
+                            <strong>{{ "connectedToSpaceLabel"|trans(current_locale.code) }}:</strong><br />
                             {{ space.name }} ({{ space_id }})
                         </p>
 
                         <form method="post" action="/settings/reset{{ query_string }}">
                             <p>
-                                <strong>{{ "applicationCredentialsLabel"|trans }}:</strong><br />
-                                <button type="submit">{{ "resetCredentialsLabel"|trans }}</button><br />
-                                <a class="status-block__sharelink" href="{{ host }}{{ "{0}&".format(query_string) if query_string else '?' }}space_id={{ space_id }}&preview_token={{ preview_token }}&delivery_token={{ delivery_token }}{{ '&enable_editorial_features' if editorial_features else '' }}">{{ "copyLinkLabel"|trans }}</a>
+                                <strong>{{ "applicationCredentialsLabel"|trans(current_locale.code) }}:</strong><br />
+                                <button type="submit">{{ "resetCredentialsLabel"|trans(current_locale.code) }}</button><br />
+                                <a class="status-block__sharelink" href="{{ host }}{{ "{0}&".format(query_string) if query_string else '?' }}space_id={{ space_id }}&preview_token={{ preview_token }}&delivery_token={{ delivery_token }}{{ '&enable_editorial_features' if editorial_features else '' }}">{{ "copyLinkLabel"|trans(current_locale.code) }}</a>
                             </p>
                         </form>
                         <p>
-                            <em>{{ "overrideConfigLabel"|trans }}</em>
+                            <em>{{ "overrideConfigLabel"|trans(current_locale.code) }}</em>
                         </p>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
 
     <form action="/settings{{ query_string }}" method="POST" class="form">
         <div class='form-item'>
-            <label for="input-space-id">{{ 'spaceIdLabel'|trans }}</label>
+            <label for="input-space-id">{{ 'spaceIdLabel'|trans(current_locale.code) }}</label>
             <input type="text" name="spaceId" id="input-space-id" value='{{ space_id }}' required="required" />
 
             {% if 'spaceId' in errors %}
@@ -111,12 +111,12 @@
             {% endif %}
 
             <div class='form-item__help-text'>
-                {{ 'spaceIdHelpText'|trans }}
+                {{ 'spaceIdHelpText'|trans(current_locale.code) }}
             </div>
         </div>
 
         <div class='form-item'>
-            <label for="input-delivery-token">{{ 'cdaAccessTokenLabel'|trans }}</label>
+            <label for="input-delivery-token">{{ 'cdaAccessTokenLabel'|trans(current_locale.code) }}</label>
             <input type="text" name="deliveryToken" id="input-delivery-token" value='{{ delivery_token }}' required="required" />
 
             {% if 'deliveryToken' in errors %}
@@ -124,13 +124,13 @@
             {% endif %}
 
             <div class='form-item__help-text'>
-                {{ 'contentDeliveryApiHelpText'|trans }}&nbsp;
+                {{ 'contentDeliveryApiHelpText'|trans(current_locale.code) }}&nbsp;
                 <a href='https://www.contentful.com/developers/docs/references/content-delivery-api/' target='_blank' rel='noopener'>Content Delivery API.</a>
             </div>
         </div>
 
         <div class='form-item'>
-            <label for="input-preview-token">{{ 'cpaAccessTokenLabel'|trans }}</label>
+            <label for="input-preview-token">{{ 'cpaAccessTokenLabel'|trans(current_locale.code) }}</label>
             <input type="text" name="previewToken" id="input-preview-token" value='{{ preview_token }}' required="required" />
 
             {% if 'previewToken' in errors %}
@@ -138,21 +138,21 @@
             {% endif %}
 
             <div class='form-item__help-text'>
-                {{ 'contentPreviewApiHelpText'|trans }}&nbsp;
+                {{ 'contentPreviewApiHelpText'|trans(current_locale.code) }}&nbsp;
                 <a href='https://www.contentful.com/developers/docs/references/content-preview-api/' target='_blank' rel='noopener'>Content Preview API.</a>
             </div>
         </div>
 
         <div class='form-item'>
             <input type="checkbox" name="editorialFeatures" id="input-editorial-features" {{ 'checked' if editorial_features else '' }} />
-            <label for="input-editorial-features">{{ 'enableEditorialFeaturesLabel'|trans }}</label>
+            <label for="input-editorial-features">{{ 'enableEditorialFeaturesLabel'|trans(current_locale.code) }}</label>
             <div class='form-item__help-text'>
-                {{ 'enableEditorialFeaturesHelpText'|trans }}
+                {{ 'enableEditorialFeaturesHelpText'|trans(current_locale.code) }}
             </div>
         </div>
 
         <div class='form-item'>
-            <input class='cta' type="submit" value='{{ 'saveSettingsButtonLabel'|trans }}' />
+            <input class='cta' type="submit" value='{{ 'saveSettingsButtonLabel'|trans(current_locale.code) }}' />
         </div>
     </form>
 </div>
