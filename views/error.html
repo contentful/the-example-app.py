@@ -4,25 +4,25 @@
     <div class='layout-centered'>
         {% include 'partials/breadcrumb.html' %}
         <div class='error'>
-            <h1>{{ 'somethingWentWrongLabel'|trans }} ({{ status }})</h1>
-            <h2>{{ 'tryLabel'|trans }}</h2>
+            <h1>{{ 'somethingWentWrongLabel'|trans(current_locale) }} ({{ status }})</h1>
+            <h2>{{ 'tryLabel'|trans(current_locale) }}</h2>
             <ul>
                 {% if status == 400 %}
-                    <li>{{ 'contentModelChangedErrorLabel'|trans }}</li>
-                    <li>{{ 'localeContentErrorLabel'|trans }}</li>
+                    <li>{{ 'contentModelChangedErrorLabel'|trans(current_locale) }}</li>
+                    <li>{{ 'localeContentErrorLabel'|trans(current_locale) }}</li>
                 {% elif status == 401 %}
-                    <li>{{ 'verifyCredentialsErrorLabel'|trans }}</li>
+                    <li>{{ 'verifyCredentialsErrorLabel'|trans(current_locale) }}</li>
                 {% elif status == 404 %}
-                    <li>{{ 'error404Route'|trans }}</li>
-                    <li>{{ 'draftOrPublishedErrorLabel'|trans }}</li>
+                    <li>{{ 'error404Route'|trans(current_locale) }}</li>
+                    <li>{{ 'draftOrPublishedErrorLabel'|trans(current_locale) }}</li>
                 {% endif %}
                 {% if environment != 'production' and stacktrace %}
-                    <li>{{ 'stackTraceErrorLabel'|trans }}</li>
+                    <li>{{ 'stackTraceErrorLabel'|trans(current_locale) }}</li>
                 {% endif %}
             </ul>
             {% if environment != 'production' %}
                 {% if 'response' in error.__dict__ or 'message' in error.__dict__ %}
-                    <h2>{{ 'errorLabel'|trans }}</h2>
+                    <h2>{{ 'errorLabel'|trans(current_locale) }}</h2>
                     <pre class='error__stack-trace'>
                     {% if 'message' in error.__dict__ %}
                         <code class='shell'>{{ error.message }}</code>
@@ -33,7 +33,7 @@
                 </pre>
                 {% endif %}
                 {% if stacktrace %}
-                    <h2>{{ 'stackTraceLabel'|trans }}</h2>
+                    <h2>{{ 'stackTraceLabel'|trans(current_locale) }}</h2>
                     <pre class='error__stack-trace'>
                         <code class='shell'>{{ stacktrace }}</code>
                     </pre>
