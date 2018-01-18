@@ -2,8 +2,6 @@ import json
 import os
 import glob
 
-from jinja2 import contextfilter
-
 TRANSLATIONS = {}
 
 
@@ -32,22 +30,21 @@ def I18n(app):
         print('Error loading localization files.')
         print(e)
 
-@contextfilter
-def trans(context, symbol):
+def trans(symbol, locale='en-US'):
     """Translation filter for templates.
     Fetches the current locale from the request.
 
     :param symbol: String to be localized.
+    :param locale: String representing locale to localize in.
     :return: Localized string.
 
     Usage:
 
-        {{ 'coursesLabel'|trans }}
+        {{ 'coursesLabel'|trans(current_locale.code) }}
         "Courses"
     """
 
-    from routes.base import locale
-    return translate(symbol, locale().code)
+    return translate(symbol, locale)
 
 
 def translate(symbol, locale='en-US'):

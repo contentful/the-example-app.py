@@ -8,6 +8,6 @@
             {% endif %}
         </figure>
     {% else %}
-        <h3>{{ 'imageErrorTitle'|trans }}</h3>
+        <h3>{{ 'imageErrorTitle'|trans(current_locale.code) }}</h3>
     {% endif %}
 </div>

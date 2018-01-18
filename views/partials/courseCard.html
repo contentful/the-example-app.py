@@ -19,6 +19,6 @@
     <p class="course-card__description">{{ course.short_description }}</p>
 
     <div class="course-card__link-wrapper">
-        <a href="/courses/{{ course.slug }}{{ query_string }}" class="course-card__link">{{ 'viewCourseLabel'|trans }}</a>
+        <a href="/courses/{{ course.slug }}{{ query_string }}" class="course-card__link">{{ 'viewCourseLabel'|trans(current_locale.code) }}</a>
     </div>
 </div>
