@@ -13,16 +13,16 @@
                 {% elif module.content_type.id == 'lessonImage' %}
                     {% include 'partials/lessonModuleImage.html' %}
                 {% else %}
-                    <h2>{{ 'lessonModuleErrorTitle'|trans(current_locale) }}</h2>
+                    <h2>{{ 'lessonModuleErrorTitle'|trans(current_locale.code) }}</h2>
                     <p>
-                        <span>{{ 'lessonModuleErrorBody'|trans(current_locale) }}</span>
+                        <span>{{ 'lessonModuleErrorBody'|trans(current_locale.code) }}</span>
                         <strong>{{ module.id }}</strong>
                     </p>
                 {% endif %}
             {% else %}
-                <h2>{{ 'lessonModuleErrorTitle'|trans(current_locale) }}</h2>
+                <h2>{{ 'lessonModuleErrorTitle'|trans(current_locale.code) }}</h2>
                 <p>
-                    <span>{{ 'lessonModuleErrorBody'|trans(current_locale) }}</span>
+                    <span>{{ 'lessonModuleErrorBody'|trans(current_locale.code) }}</span>
                     <strong>{{ module.id }}</strong>
                 </p>
             {% endif %}
@@ -30,6 +30,6 @@
     </div>
 
     {% if next_lesson %}
-        <a href="/courses/{{ course.slug }}/lessons/{{ next_lesson.slug }}{{ query_string }}" class="lesson__cta cta">{{ 'nextLessonLabel'|trans(current_locale) }}</a>
+        <a href="/courses/{{ course.slug }}/lessons/{{ next_lesson.slug }}{{ query_string }}" class="lesson__cta cta">{{ 'nextLessonLabel'|trans(current_locale.code) }}</a>
     {% endif %}
 </div>

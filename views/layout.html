@@ -1,13 +1,13 @@
 {% macro entry_state(entry) -%}
   {% if entry.draft %}
     <div class="pill pill--draft">
-      {{ 'draftLabel'|trans(current_locale) }}
+      {{ 'draftLabel'|trans(current_locale.code) }}
     </div>
   {% endif %}
 
   {% if entry.pending_changes %}
     <div class="pill pill--pending-changes">
-      {{ 'pendingChangesLabel'|trans(current_locale) }}
+      {{ 'pendingChangesLabel'|trans(current_locale.code) }}
     </div>
   {% endif %}
 {%- endmacro %}
@@ -27,12 +27,12 @@
             class="editorial-features__text"
             target="_blank"
             rel="noopener"
-        >{{ 'editInTheWebAppLabel'|trans(current_locale) }}</a>
+        >{{ 'editInTheWebAppLabel'|trans(current_locale.code) }}</a>
 
         <div class="editorial-features__hint-wrapper">
           <svg class="editorial-features__hint-icon">
               <use xlink:href="{{ url_for('static', filename='/icons/icons.svg') }}#info" />
-              <div class="editorial-features__hint-message">{{ 'editorialFeaturesHint'|trans(current_locale) }}</div>
+              <div class="editorial-features__hint-message">{{ 'editorialFeaturesHint'|trans(current_locale.code) }}</div>
           </svg>
         </div>
       </div>
@@ -49,8 +49,8 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="{{ 'metaDescription'|trans(current_locale) }}" />
-<meta name="twitter:card" content="{{ 'metaTwitterCard'|trans(current_locale) }}" />
+<meta name="description" content="{{ 'metaDescription'|trans(current_locale.code) }}" />
+<meta name="twitter:card" content="{{ 'metaTwitterCard'|trans(current_locale.code) }}" />
 
 <meta property="og:title" content="{{ format_meta_title(title, current_locale.code) }}">
 <meta property="og:type" content="article" />
@@ -59,8 +59,8 @@
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="1200" />
-<meta property="og:image:alt" content="{{ 'metaImageAlt'|trans(current_locale) }}" />
-<meta property="og:description" content="{{ 'metaImageDescription'|trans(current_locale) }}" />
+<meta property="og:image:alt" content="{{ 'metaImageAlt'|trans(current_locale.code) }}" />
+<meta property="og:description" content="{{ 'metaImageDescription'|trans(current_locale.code) }}" />
 
 <link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='apple-touch-icon.png') }}" />
 <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}" />
@@ -83,7 +83,7 @@
               <use xlink:href="{{ url_for('static', filename="icons/icons.svg") }}#info"></use>
               {% endautoescape %}
             </svg>
-            <span>{{ 'whatIsThisApp'|trans(current_locale) }}</span>
+            <span>{{ 'whatIsThisApp'|trans(current_locale.code) }}</span>
           </a>
         </div>
 
@@ -94,7 +94,7 @@
               <use xlink:href="{{ url_for('static', filename="icons/icons.svg") }}#github"></use>
               {% endautoescape %}
             </svg>
-            {{ 'viewOnGithub'|trans(current_locale) }}
+            {{ 'viewOnGithub'|trans(current_locale.code) }}
           </a>
         </div>
 
@@ -103,22 +103,22 @@
             <form action="" method="get">
               <div class="header__controls_label">API: {{ current_api['label'] }}</div>
               <div class="header__controls_dropdown">
-                <div class="header__controls_help_text">{{ 'apiSwitcherHelp'|trans(current_locale) }}</div>
+                <div class="header__controls_help_text">{{ 'apiSwitcherHelp'|trans(current_locale.code) }}</div>
                 <button
                   class="header__controls_button {{ 'header__controls_button--active' if current_api['id'] == 'cda' else '' }}"
                   type="submit"
                   name="api"
                   value="cda"
-                  >{{ 'contentDeliveryApiLabel'|trans(current_locale) }}:<br />
-                  <span class="header__controls_button_help">{{ 'contentDeliveryApiHelp'|trans(current_locale) }}</span>
+                  >{{ 'contentDeliveryApiLabel'|trans(current_locale.code) }}:<br />
+                  <span class="header__controls_button_help">{{ 'contentDeliveryApiHelp'|trans(current_locale.code) }}</span>
                 </button>
                 <button
                   class="header__controls_button {{ 'header__controls_button--active' if current_api['id'] == 'cpa' else '' }}"
                   type="submit"
                   name="api"
                   value="cpa"
-                  >{{ 'contentPreviewApiLabel'|trans(current_locale) }}:<br />
-                  <span class="header__controls_button_help">{{ 'contentPreviewApiHelp'|trans(current_locale) }}</span>
+                  >{{ 'contentPreviewApiLabel'|trans(current_locale.code) }}:<br />
+                  <span class="header__controls_button_help">{{ 'contentPreviewApiHelp'|trans(current_locale.code) }}</span>
                 </button>
               </div>
               <input type="hidden" name="locale" value="{{ current_locale.code }}" />
@@ -128,9 +128,9 @@
           <div class="header__controls_group">
             <form action="" method="get">
               <input type="hidden" name="api" value="{{ current_api['id'] }}" />
-              <div class="header__controls_label">{{ 'locale'|trans(current_locale) }}: {{ current_locale.name }}</div>
+              <div class="header__controls_label">{{ 'locale'|trans(current_locale.code) }}: {{ current_locale.name }}</div>
               <div class="header__controls_dropdown">
-                <div class="header__controls_help_text">{{ 'localeQuestion'|trans(current_locale) }}</div>
+                <div class="header__controls_help_text">{{ 'localeQuestion'|trans(current_locale.code) }}</div>
                   {% for locale in locales %}
                     <button type="submit" name="locale" value="{{ locale.code }}" class="header__controls_button {{ 'header__controls_button--active' if current_locale.code == locale.code else '' }}">
                       {{ locale.name }} ({{locale.code}})
@@ -142,7 +142,7 @@
         </div>
 
         <div class="header__upper-menu">
-          <a href="/settings{{ query_string }}">{{ 'settingsLabel'|trans(current_locale) }}</a>
+          <a href="/settings{{ query_string }}">{{ 'settingsLabel'|trans(current_locale.code) }}</a>
         </div>
       </div>
     </div>
@@ -151,17 +151,17 @@
       <div class="header__lower layout-centered">
         <div class="header__logo">
           <a class="header__logo-link" href="/{{ query_string }}">
-            <img src="{{ url_for('static', filename='images/the-example-app-logo-python.svg') }}" alt="{{ 'logoAlt'|trans(current_locale) }}" />
+            <img src="{{ url_for('static', filename='images/the-example-app-logo-python.svg') }}" alt="{{ 'logoAlt'|trans(current_locale.code) }}" />
           </a>
         </div>
 
         <nav class="header__navigation main-navigation">
           <ul>
             <li>
-              <a class="{{ 'active' if current_path == '/' else '' }}" href="/{{ query_string }}">{{ 'homeLabel'|trans(current_locale) }}</a>
+              <a class="{{ 'active' if current_path == '/' else '' }}" href="/{{ query_string }}">{{ 'homeLabel'|trans(current_locale.code) }}</a>
             </li>
             <li>
-              <a class="{{ 'active' if current_path.startswith('/courses') else '' }}" href="/courses{{ query_string }}">{{ 'coursesLabel'|trans(current_locale) }}</a>
+              <a class="{{ 'active' if current_path.startswith('/courses') else '' }}" href="/courses{{ query_string }}">{{ 'coursesLabel'|trans(current_locale.code) }}</a>
             </li>
           </ul>
         </nav>
@@ -181,10 +181,10 @@
         <nav class="footer__navigation main-navigation">
           <ul>
             <li>
-              <a class="{{ 'active' if current_path == '/' else '' }}" href="/{{ query_string }}">{{ 'homeLabel'|trans(current_locale) }}</a>
+              <a class="{{ 'active' if current_path == '/' else '' }}" href="/{{ query_string }}">{{ 'homeLabel'|trans(current_locale.code) }}</a>
             </li>
             <li>
-              <a class="{{ 'active' if current_path.startswith('/courses') else '' }}" href="/courses{{ query_string }}">{{ 'coursesLabel'|trans(current_locale) }}</a>
+              <a class="{{ 'active' if current_path.startswith('/courses') else '' }}" href="/courses{{ query_string }}">{{ 'coursesLabel'|trans(current_locale.code) }}</a>
             </li>
           </ul>
         </nav>
@@ -209,10 +209,10 @@
 
         <div class="footer__disclaimer">
           <p class="footer__disclaimer-text">
-            {{ 'footerDisclaimer'|trans(current_locale) }}&nbsp;
-            <a href="https://github.com/contentful/the-example-app.php" target="_blank" rel="noopener">{{ 'viewOnGithub'|trans(current_locale) }}</a>.&nbsp;
-            <a href="/imprint{{ query_string }}">{{ 'imprintLabel'|trans(current_locale) }}</a>.&nbsp;
-            <a href="https://www.contentful.com/contact/">{{ 'contactUsLabel'|trans(current_locale) }}</a>.
+            {{ 'footerDisclaimer'|trans(current_locale.code) }}&nbsp;
+            <a href="https://github.com/contentful/the-example-app.php" target="_blank" rel="noopener">{{ 'viewOnGithub'|trans(current_locale.code) }}</a>.&nbsp;
+            <a href="/imprint{{ query_string }}">{{ 'imprintLabel'|trans(current_locale.code) }}</a>.&nbsp;
+            <a href="https://www.contentful.com/contact/">{{ 'contactUsLabel'|trans(current_locale.code) }}</a>.
           </p>
         </div>
 
@@ -244,53 +244,53 @@
 <section class="modal" id="about-this-modal">
   <div class="modal__overlay close"></div>
   <div class="modal__wrapper">
-    <h1 class="modal__title">{{ "modalTitlePython"|trans(current_locale) }}</h1>
+    <h1 class="modal__title">{{ "modalTitlePython"|trans(current_locale.code) }}</h1>
     <div class="modal__content">
-      <p>{{ "modalIntroPython"|trans(current_locale) }}&nbsp;<a href="https://github.com/contentful/the-example-app.py" target="_blank" rel="noopener">Github</a>.</p>
-      <p>{{ "modalSpaceIntro"|trans(current_locale) }}&nbsp;<a href="https://github.com/contentful/content-models/blob/master/the-example-app/README.md " target="_blank" rel="noopener">{{ "modalSpaceLinkLabel"|trans(current_locale) }}</a>.</p>
-      <p>{{ "modalPlatforms"|trans(current_locale) }}</p>
+      <p>{{ "modalIntroPython"|trans(current_locale.code) }}&nbsp;<a href="https://github.com/contentful/the-example-app.py" target="_blank" rel="noopener">Github</a>.</p>
+      <p>{{ "modalSpaceIntro"|trans(current_locale.code) }}&nbsp;<a href="https://github.com/contentful/content-models/blob/master/the-example-app/README.md " target="_blank" rel="noopener">{{ "modalSpaceLinkLabel"|trans(current_locale.code) }}</a>.</p>
+      <p>{{ "modalPlatforms"|trans(current_locale.code) }}</p>
       <ul>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-nodejs.svg") }}'><br />
-          <a href="https://the-example-app-nodejs.herokuapp.com/" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale) }}</a> <br />
+          <a href="https://the-example-app-nodejs.herokuapp.com/" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
           <a href="https://github.com/contentful/the-example-app.nodejs" rel="noopener" target="_blank">GitHub</a>
         </li>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-dotnet.svg") }}'><br />
-          <a href="https://the-example-app-csharp.herokuapp.com/" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale) }}</a> <br />
+          <a href="https://the-example-app-csharp.herokuapp.com/" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
           <a href="https://github.com/contentful/the-example-app.csharp" rel="noopener" target="_blank">GitHub</a>
         </li>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-ruby.svg") }}'><br />
-          <a href="https://the-example-app-rb.herokuapp.com/" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale) }}</a> <br />
+          <a href="https://the-example-app-rb.herokuapp.com/" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
           <a href="https://github.com/contentful/the-example-app.rb" rel="noopener" target="_blank">GitHub</a>
         </li>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-php.svg") }}'><br />
-          <a href="https://the-example-app-php.herokuapp.com/" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale) }}</a> <br />
+          <a href="https://the-example-app-php.herokuapp.com/" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
           <a href="https://github.com/contentful/the-example-app.php" rel="noopener" target="_blank">GitHub</a>
         </li>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-python.svg") }}'><br />
-          <a href="https://the-example-app-py.herokuapp.com/" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale) }}</a> <br />
+          <a href="https://the-example-app-py.herokuapp.com/" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
           <a href="https://github.com/contentful/the-example-app.py" rel="noopener" target="_blank">GitHub</a>
         </li>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-swift.svg") }}' class="inactive"><br />
-          {{ "comingSoonLabel"|trans(current_locale) }}
+          {{ "comingSoonLabel"|trans(current_locale.code) }}
         </li>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-java.svg") }}' class="inactive"><br />
-          {{ "comingSoonLabel"|trans(current_locale) }}
+          {{ "comingSoonLabel"|trans(current_locale.code) }}
         </li>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-android.svg") }}' class="inactive"><br />
-          {{ "comingSoonLabel"|trans(current_locale) }}
+          {{ "comingSoonLabel"|trans(current_locale.code) }}
         </li>
       </ul>
     </div>
     <div class="modal__cta-wrapper">
-      <a class="modal__cta close" href="#">{{ "modalCTALabel"|trans(current_locale) }}</a>
+      <a class="modal__cta close" href="#">{{ "modalCTALabel"|trans(current_locale.code) }}</a>
     </div>
     <div class="modal__close-wrapper">
       <a class="modal__close-button close" href="#">

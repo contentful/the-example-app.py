@@ -40,7 +40,7 @@ def trans(symbol, locale='en-US'):
 
     Usage:
 
-        {{ 'coursesLabel'|trans(current_locale) }}
+        {{ 'coursesLabel'|trans(current_locale.code) }}
         "Courses"
     """
 
