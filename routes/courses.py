@@ -73,6 +73,7 @@ def show_courses_by_category(category_slug):
         title='{0} ({1})'.format(active_category.title, len(courses)),
         courses=courses,
         categories=categories,
+        current_category=active_category,
         breadcrumbs=refine(raw_breadcrumbs(), active_category)
     )
 
