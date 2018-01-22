@@ -20,9 +20,9 @@ def I18n(app):
 
     try:
         for file_name in glob.glob(os.path.join(locales_path, '*.json')):
-            locale_name = file_name.split('/')[-1].replace('.json', '')
+            locale_name = os.path.basename(file_name).replace('.json', '')
 
-            with open(file_name, 'r') as f:
+            with open(file_name, 'r', encoding='utf8') as f:
                 TRANSLATIONS[locale_name] = json.loads(f.read())
 
         app.add_template_filter(trans)

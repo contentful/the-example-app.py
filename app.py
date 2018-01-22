@@ -2,12 +2,12 @@ import os
 from datetime import timedelta
 
 from flask import Flask, session
-from flask_misaka import Misaka
 from flask_sslify import SSLify
 from dotenv import load_dotenv
 
 from i18n.i18n import I18n
 from lib.entry_state import should_show_entry_state
+from lib.markdown import markdown
 
 from routes.base import before_request, format_meta_title
 from routes.errors import pretty_json
@@ -56,7 +56,7 @@ def set_session_permanency():
 
 
 # Register Markdown engine
-Misaka(app)
+app.add_template_filter(markdown)
 
 # Register HTTPS Extension
 SSLify(app)
