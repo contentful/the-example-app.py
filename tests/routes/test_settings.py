@@ -36,7 +36,7 @@ class SettingsTest(IntegrationTestBase):
 
         # Reset session
         response = self.app.post('/settings/reset').data
-        self.assertIn(b'The example app space v1', response)
+        self.assertIn(b'Loaded from local file', response)
 
     # Errors
     def test_display_field_required_errors_if_on_any_of_the_text_inputs_input_is_missing(self):
