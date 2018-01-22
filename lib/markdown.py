@@ -12,5 +12,4 @@ def markdown(text):
         {{ 'Some *markdown*'|markdown }}
         "Some <strong>markdown</strong>"
     """
-    print(text)
     return Markup(CommonMark.commonmark(text))
