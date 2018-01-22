@@ -9,7 +9,7 @@ from i18n.i18n import I18n
 from lib.entry_state import should_show_entry_state
 from lib.markdown import markdown
 
-from routes.base import before_request, format_meta_title, get_custom_parameters
+from routes.base import before_request, format_meta_title, parameterized_url
 from routes.errors import pretty_json
 
 from routes.index import index
@@ -77,7 +77,7 @@ app.register_blueprint(settings)
 
 # Register Helpers
 app.add_template_global(format_meta_title)
-app.add_template_global(get_custom_parameters)
+app.add_template_global(parameterized_url)
 app.add_template_global(should_show_entry_state)
 app.add_template_filter(pretty_json)
 
