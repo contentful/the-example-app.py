@@ -150,6 +150,27 @@ def format_meta_title(title, locale):
         translate('defaultTitle', locale)
     )
 
+def get_custom_parameters():
+    """Formats a query string url with deep link
+    parameters for space, delivery key and preview key.
+    """
+
+    session_space_id = session.get('space_id', None)
+    session_delivery_token = session.get('delivery_token', None)
+    session_preview_token = session.get('preview_token', None)
+    session_editorial_features = session.get('enable_editorial_features', None)
+    current_api_id = api_id()
+    editorial_features_query = "&enable_editorial_features=Enabled" if session_editorial_features and session_editorial_features is not None else ""
+
+    if (session_space_id is not None and
+        session_space_id != environ['CONTENTFUL_SPACE_ID'] and
+        session_delivery_token is not None and
+        session_delivery_token != environ['CONTENTFUL_DELIVERY_TOKEN'] and
+        session_preview_token is not None and
+        session_preview_token != environ['CONTENTFUL_PREVIEW_TOKEN']):
+        return "?space_id={0}&preview_token={1}&delivery_token={2}&api={3}{4}".format(session_space_id, session_preview_token, session_delivery_token, current_api_id, editorial_features_query)
+
+    return ""
 
 def render_with_globals(template_name, **params):
     """Renders the desired template with the shared state included.
