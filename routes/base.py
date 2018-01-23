@@ -160,7 +160,7 @@ def parameterized_url():
     session_preview_token = session.get('preview_token', None)
     session_editorial_features = session.get('enable_editorial_features', None)
     current_api_id = api_id()
-    editorial_features_query = "&enable_editorial_features=Enabled" if session_editorial_features and session_editorial_features is not None else ""
+    editorial_features_query = "&enable_editorial_features" if session_editorial_features and session_editorial_features is not None else ""
 
     if (session_space_id is not None and
         session_space_id != environ['CONTENTFUL_SPACE_ID'] and
