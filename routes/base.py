@@ -63,7 +63,8 @@ def contentful():
         session.get(
             'preview_token',
             environ.get('CONTENTFUL_PREVIEW_TOKEN', None)
-        )
+        ),
+        environ.get('CONTENTFUL_HOST', None)
     )
 
 
