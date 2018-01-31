@@ -54,8 +54,8 @@
 
 <meta property="og:title" content="{{ format_meta_title(title, current_locale.code) }}">
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://the-example-app-py.herokuapp.com{{ current_path }}{{ query_string}}" />
-<meta property="og:image" content="https://the-example-app-py.herokuapp.com/og-image.jpg" />
+<meta property="og:url" content="https://the-example-app-py.contentful.com{{ current_path }}{{ query_string}}" />
+<meta property="og:image" content="https://the-example-app-py.contentful.com/og-image.jpg" />
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="1200" />
@@ -240,35 +240,36 @@
       <ul>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-nodejs.svg") }}'><br />
-          <a href="https://the-example-app-nodejs.herokuapp.com/{{ parameterized_url() }}" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
+          <a href="https://the-example-app-nodejs.contentful.com/{{ parameterized_url() }}" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
           <a href="https://github.com/contentful/the-example-app.nodejs" rel="noopener" target="_blank">GitHub</a>
         </li>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-dotnet.svg") }}'><br />
-          <a href="https://the-example-app-csharp.herokuapp.com/{{ parameterized_url() }}" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
+          <a href="https://the-example-app-csharp.contentful.com/{{ parameterized_url() }}" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
           <a href="https://github.com/contentful/the-example-app.csharp" rel="noopener" target="_blank">GitHub</a>
         </li>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-ruby.svg") }}'><br />
-          <a href="https://the-example-app-rb.herokuapp.com/{{ parameterized_url() }}" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
+          <a href="https://the-example-app-rb.contentful.com/{{ parameterized_url() }}" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
           <a href="https://github.com/contentful/the-example-app.rb" rel="noopener" target="_blank">GitHub</a>
         </li>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-php.svg") }}'><br />
-          <a href="https://the-example-app-php.herokuapp.com/{{ parameterized_url() }}" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
+          <a href="https://the-example-app-php.contentful.com/{{ parameterized_url() }}" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
           <a href="https://github.com/contentful/the-example-app.php" rel="noopener" target="_blank">GitHub</a>
         </li>
         <li>
           <img src='{{ url_for('static', filename="/images/icon-python.svg") }}'><br />
-          <a href="https://the-example-app-py.herokuapp.com/{{ parameterized_url() }}" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
+          <a href="https://the-example-app-py.contentful.com/{{ parameterized_url() }}" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
           <a href="https://github.com/contentful/the-example-app.py" rel="noopener" target="_blank">GitHub</a>
         </li>
         <li>
-          <img src='{{ url_for('static', filename="/images/icon-swift.svg") }}' class="inactive"><br />
-          {{ "comingSoonLabel"|trans(current_locale.code) }}
+          <img src='{{ url_for('static', filename="/images/icon-java.svg") }}' class="inactive"><br />
+          <a href="https://the-example-app-java.contentful.com/{{ parameterized_url() }}" rel="noopener" target="_blank">{{ "hostedLabel"|trans(current_locale.code) }}</a> <br />
+          <a href="https://github.com/contentful/the-example-app.java" rel="noopener" target="_blank">GitHub</a>
         </li>
         <li>
-          <img src='{{ url_for('static', filename="/images/icon-java.svg") }}' class="inactive"><br />
+          <img src='{{ url_for('static', filename="/images/icon-swift.svg") }}' class="inactive"><br />
           {{ "comingSoonLabel"|trans(current_locale.code) }}
         </li>
         <li>
