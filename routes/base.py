@@ -24,10 +24,7 @@ def before_request():
     update_session_for('space_id')
     update_session_for('delivery_token')
     update_session_for('preview_token')
-    update_session_for(
-        'enable_editorial_features',
-        coercion=lambda value: value is not None
-    )
+    update_session_for('editorial_features')
 
 
 def update_session_for(key, with_value=None, coercion=None):
@@ -115,7 +112,7 @@ def query_string():
         'space_id',
         'delivery_token',
         'preview_token',
-        'enable_editorial_features'
+        'editorial_features'
     ]
     args = {k: v for k, v
             in request.args.items()
@@ -159,9 +156,9 @@ def parameterized_url():
     session_space_id = session.get('space_id', None)
     session_delivery_token = session.get('delivery_token', None)
     session_preview_token = session.get('preview_token', None)
-    session_editorial_features = session.get('enable_editorial_features', None)
+    session_editorial_features = session.get('editorial_features', None)
     current_api_id = api_id()
-    editorial_features_query = "&enable_editorial_features" if session_editorial_features and session_editorial_features is not None else ""
+    editorial_features_query = "&editorial_features=enabled" if session_editorial_features and session_editorial_features is not None else "&editorial_features=disabled"
 
     if (session_space_id is not None and
         session_space_id != environ['CONTENTFUL_SPACE_ID'] and
@@ -189,7 +186,7 @@ def render_with_globals(template_name, **params):
         'current_path': request.path,
         'query_string': query_string(),
         'breadcrumbs': raw_breadcrumbs(),
-        'editorial_features': session.get('enable_editorial_features', False),
+        'editorial_features': session.get('editorial_features', '').lower() == 'enabled'.lower(),
         'space_id': session.get(
             'space_id',
             environ.get('CONTENTFUL_SPACE_ID', None)

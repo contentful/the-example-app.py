@@ -89,7 +89,7 @@
                             <p>
                                 <strong>{{ "applicationCredentialsLabel"|trans(current_locale.code) }}:</strong><br />
                                 <button type="submit">{{ "resetCredentialsLabel"|trans(current_locale.code) }}</button><br />
-                                <a class="status-block__sharelink" href="{{ host }}{{ "{0}&".format(query_string) if query_string else '?' }}space_id={{ space_id }}&preview_token={{ preview_token }}&delivery_token={{ delivery_token }}{{ '&enable_editorial_features' if editorial_features else '' }}">{{ "copyLinkLabel"|trans(current_locale.code) }}</a>
+                                <a class="status-block__sharelink" href="{{ host }}{{ "{0}&".format(query_string) if query_string else '?' }}space_id={{ space_id }}&preview_token={{ preview_token }}&delivery_token={{ delivery_token }}{{ '&editorial_features=enabled' if editorial_features else '&editorial_features=disabled' }}">{{ "copyLinkLabel"|trans(current_locale.code) }}</a>
                             </p>
                         </form>
                         <p>

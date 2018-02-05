@@ -138,5 +138,5 @@ def should_attach_entry_state(current_api_id, session):
 
     return (
         current_api_id == 'cpa' and
-        session.get('enable_editorial_features', False)
+        session.get('editorial_features', False)
     )
