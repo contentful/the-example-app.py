@@ -54,7 +54,7 @@ def save_settings():
         update_session_for('space_id', space_id)
         update_session_for('delivery_token', delivery_token)
         update_session_for('preview_token', preview_token)
-        update_session_for('enable_editorial_features', editorial_features)
+        update_session_for('editorial_features', 'enabled' if editorial_features else 'disabled')
 
     space = contentful().space(api_id())
 
@@ -76,7 +76,7 @@ def reset_settings():
     session.pop('space_id', None)
     session.pop('delivery_token', None)
     session.pop('preview_token', None)
-    session.pop('enable_editorial_features', None)
+    session.pop('editorial_features', None)
 
     space = contentful().space(api_id())
 

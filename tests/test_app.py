@@ -24,7 +24,7 @@ class AppTest(IntegrationTestBase):
         self.assertRedirect(self.app.get('/courses/hello-contentful/lessons'))
 
     def test_course_lesson(self):
-        self.assertSuccess(self.app.get('/courses/hello-contentful/lessons/architecture'))
+        self.assertSuccess(self.app.get('/courses/hello-contentful/lessons/content-model'))
 
     def test_get_settings(self):
         self.assertSuccess(self.app.get('/settings'))
@@ -40,10 +40,10 @@ class AppTest(IntegrationTestBase):
         self.assertSuccess(self.app.get('/imprint'))
 
     def test_editorial_features_are_shown_if_editorial_features_are_enabled(self):
-        self.assertIn(b'Edit in the Contentful web app', self.app.get('/?enable_editorial_features=true').data)
+        self.assertIn(b'Edit in the Contentful web app', self.app.get('/?editorial_features=enabled').data)
 
     def test_query_strings_are_sanitized_to_only_include_locale_and_api(self):
-        response = self.app.get('/?api=cpa&locale=en-US&enable_editorial_features=true').data
+        response = self.app.get('/?api=cpa&locale=en-US&editorial_features=enabled').data
         self.assertIn(b'/courses?api=cpa&amp;locale=en-US', response)
 
         # Doesn't add additional parameters
