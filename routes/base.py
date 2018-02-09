@@ -208,6 +208,7 @@ def format_meta_title(title, locale):
         translate('defaultTitle', locale)
     )
 
+
 def parameterized_url():
     """Formats a query string url with deep link
     parameters for space, delivery key and preview key.

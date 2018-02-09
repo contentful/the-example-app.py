@@ -37,7 +37,7 @@ class Contentful(object):
             'api_url': 'cdn.{0}.com'.format(host)
         }
         if is_preview:
-            options['api_url'] = 'preview.{0}.com'.format(host)            
+            options['api_url'] = 'preview.{0}.com'.format(host)
 
         return Client(space_id, access_token, **options)
 
@@ -127,11 +127,11 @@ class Contentful(object):
         self.delivery_client = self.__class__.create_client(
             space_id,
             delivery_token,
-            host = host
+            host=host
         )
         self.preview_client = self.__class__.create_client(
             space_id,
             preview_token,
             True,
-            host = host
+            host=host
         )
