@@ -10,7 +10,8 @@ from routes.base import locale, \
                         check_errors, \
                         space_id, \
                         delivery_token, \
-                        preview_token
+                        preview_token, \
+                        is_using_custom_credentials
 from routes.errors import wrap_errors
 from i18n.i18n import translate
 
@@ -115,21 +116,4 @@ def restore_session_to_last_valid_values():
     session['preview_token'] = session.get(
         'last_valid_preview_token',
         environ.get('CONTENTFUL_PREVIEW_TOKEN')
-    )
-
-
-def is_using_custom_credentials(session):
-    """Checks if user is using default or custom credentials."""
-
-    session_space_id = space_id()
-    session_delivery_token = delivery_token()
-    session_preview_token = preview_token()
-
-    return (
-        (session_space_id is not None and
-            session_space_id != environ['CONTENTFUL_SPACE_ID']) or
-        (session_delivery_token is not None and
-            session_delivery_token != environ['CONTENTFUL_DELIVERY_TOKEN']) or
-        (session_preview_token is not None and
-            session_preview_token != environ['CONTENTFUL_PREVIEW_TOKEN'])
     )

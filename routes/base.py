@@ -24,6 +24,8 @@ def before_request():
     to settings page.
     """
 
+    update_session_for('editorial_features', coercion=lambda x: x == 'enabled')
+
     if is_changing_credentials() and not session.get('has_errors', False):
         errors = check_errors(
             request.args.get(
@@ -48,13 +50,29 @@ def before_request():
 
         for key in ['space_id', 'delivery_token', 'preview_token']:
             update_session_for(key)
-        update_session_for('editorial_features', coercion=lambda x: x == 'enabled')
 
         if errors:
             return redirect(url_for('settings.show_settings'))
     else:
         if session.get('has_errors', False):
             del session['has_errors']
+
+
+def is_using_custom_credentials(session):
+    """Checks if user is using default or custom credentials."""
+
+    session_space_id = space_id()
+    session_delivery_token = delivery_token()
+    session_preview_token = preview_token()
+
+    return (
+        (session_space_id is not None and
+            session_space_id != environ['CONTENTFUL_SPACE_ID']) or
+        (session_delivery_token is not None and
+            session_delivery_token != environ['CONTENTFUL_DELIVERY_TOKEN']) or
+        (session_preview_token is not None and
+            session_preview_token != environ['CONTENTFUL_PREVIEW_TOKEN'])
+    )
 
 
 def is_changing_credentials():
@@ -195,20 +213,14 @@ def parameterized_url():
     parameters for space, delivery key and preview key.
     """
 
-    session_space_id = session.get('space_id', None)
-    session_delivery_token = session.get('delivery_token', None)
-    session_preview_token = session.get('preview_token', None)
-    session_editorial_features = session.get('editorial_features', None)
-    current_api_id = api_id()
-    editorial_features_query = "&editorial_features=enabled" if session_editorial_features and session_editorial_features is not None else "&editorial_features=disabled"
-
-    if (session_space_id is not None and
-        session_space_id != environ['CONTENTFUL_SPACE_ID'] and
-        session_delivery_token is not None and
-        session_delivery_token != environ['CONTENTFUL_DELIVERY_TOKEN'] and
-        session_preview_token is not None and
-        session_preview_token != environ['CONTENTFUL_PREVIEW_TOKEN']):
-        return "?space_id={0}&preview_token={1}&delivery_token={2}&api={3}{4}".format(session_space_id, session_preview_token, session_delivery_token, current_api_id, editorial_features_query)
+    if is_using_custom_credentials(session):
+        return "?space_id={0}&delivery_token={1}&preview_token={2}&api={3}{4}".format(
+            space_id(),
+            delivery_token(),
+            preview_token(),
+            api_id(),
+            "&editorial_features=enabled" if session.get('editorial_features', False) else "&editorial_features=disabled"
+        )
 
     return ""
 
@@ -334,7 +346,7 @@ def render_with_globals(template_name, **params):
         'current_path': request.path,
         'query_string': query_string(),
         'breadcrumbs': raw_breadcrumbs(),
-        'editorial_features': session.get('editorial_features', '').lower() == 'enabled'.lower(),
+        'editorial_features': session.get('editorial_features', False),
         'space_id': space_id(),
         'delivery_token': delivery_token(),
         'preview_token': preview_token(),
