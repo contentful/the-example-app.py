@@ -1,4 +1,4 @@
-from flask import render_template, request, session
+from flask import render_template, request, session, redirect, url_for
 from os import environ, path
 from contentful.errors import HTTPError
 from contentful.locale import Locale
@@ -19,12 +19,81 @@ DEFAULT_LOCALE = Locale({
 
 
 def before_request():
-    """Updates session with values coming from the query string if present."""
+    """Updates session with values coming from the query string if present.
+    If credentials are invalid, set error flag, for error wrapper to redirect
+    to settings page.
+    """
 
-    update_session_for('space_id')
-    update_session_for('delivery_token')
-    update_session_for('preview_token')
-    update_session_for('editorial_features')
+    update_session_for('editorial_features', coercion=lambda x: x == 'enabled')
+
+    if is_changing_credentials() and not session.get('has_errors', False):
+        errors = check_errors(
+            request.args.get(
+                'space_id',
+                environ.get('CONTENTFUL_SPACE_ID', None)
+            ),
+            request.args.get(
+                'delivery_token',
+                environ.get('CONTENTFUL_DELIVERY_TOKEN', None)
+            ),
+            request.args.get(
+                'preview_token',
+                environ.get('CONTENTFUL_PREVIEW_TOKEN', None)
+            )
+        )
+
+        session['has_errors'] = bool(errors)
+        if errors:
+            session['last_valid_space_id'] = space_id()
+            session['last_valid_delivery_token'] = delivery_token()
+            session['last_valid_preview_token'] = preview_token()
+
+        for key in ['space_id', 'delivery_token', 'preview_token']:
+            update_session_for(key)
+
+        if errors:
+            return redirect(url_for('settings.show_settings'))
+    else:
+        if session.get('has_errors', False):
+            del session['has_errors']
+
+
+def is_using_custom_credentials(session):
+    """Checks if user is using default or custom credentials."""
+
+    session_space_id = space_id()
+    session_delivery_token = delivery_token()
+    session_preview_token = preview_token()
+
+    return (
+        (session_space_id is not None and
+            session_space_id != environ['CONTENTFUL_SPACE_ID']) or
+        (session_delivery_token is not None and
+            session_delivery_token != environ['CONTENTFUL_DELIVERY_TOKEN']) or
+        (session_preview_token is not None and
+            session_preview_token != environ['CONTENTFUL_PREVIEW_TOKEN'])
+    )
+
+
+def is_changing_credentials():
+    """Checks if the sent query string is attempting to change the current credentials."""
+
+    current_space_id = space_id()
+    current_delivery_token = delivery_token()
+    current_preview_token = preview_token()
+
+    attempted_space_id = request.args.get('space_id', None)
+    attempted_delivery_token = request.args.get('delivery_token', None)
+    attempted_preview_token = request.args.get('preview_token', None)
+
+    return (
+        (attempted_space_id is not None and
+            current_space_id != attempted_space_id) or
+        (attempted_delivery_token is not None and
+            current_delivery_token != attempted_delivery_token) or
+        (attempted_preview_token is not None and
+            current_preview_token != attempted_preview_token)
+    )
 
 
 def update_session_for(key, with_value=None, coercion=None):
@@ -49,18 +118,9 @@ def contentful():
     """Returns an instance of the Contentful service with the found credentials."""
 
     return Contentful.instance(
-        session.get(
-            'space_id',
-            environ.get('CONTENTFUL_SPACE_ID', None)
-        ),
-        session.get(
-            'delivery_token',
-            environ.get('CONTENTFUL_DELIVERY_TOKEN', None)
-        ),
-        session.get(
-            'preview_token',
-            environ.get('CONTENTFUL_PREVIEW_TOKEN', None)
-        ),
+        space_id(),
+        delivery_token(),
+        preview_token(),
         environ.get('CONTENTFUL_HOST', None)
     )
 
@@ -148,27 +208,128 @@ def format_meta_title(title, locale):
         translate('defaultTitle', locale)
     )
 
+
 def parameterized_url():
     """Formats a query string url with deep link
     parameters for space, delivery key and preview key.
     """
 
-    session_space_id = session.get('space_id', None)
-    session_delivery_token = session.get('delivery_token', None)
-    session_preview_token = session.get('preview_token', None)
-    session_editorial_features = session.get('editorial_features', None)
-    current_api_id = api_id()
-    editorial_features_query = "&editorial_features=enabled" if session_editorial_features and session_editorial_features is not None else "&editorial_features=disabled"
-
-    if (session_space_id is not None and
-        session_space_id != environ['CONTENTFUL_SPACE_ID'] and
-        session_delivery_token is not None and
-        session_delivery_token != environ['CONTENTFUL_DELIVERY_TOKEN'] and
-        session_preview_token is not None and
-        session_preview_token != environ['CONTENTFUL_PREVIEW_TOKEN']):
-        return "?space_id={0}&preview_token={1}&delivery_token={2}&api={3}{4}".format(session_space_id, session_preview_token, session_delivery_token, current_api_id, editorial_features_query)
+    if is_using_custom_credentials(session):
+        return "?space_id={0}&delivery_token={1}&preview_token={2}&api={3}{4}".format(
+            space_id(),
+            delivery_token(),
+            preview_token(),
+            api_id(),
+            "&editorial_features=enabled" if session.get('editorial_features', False) else "&editorial_features=disabled"
+        )
 
     return ""
+
+
+def check_errors(space_id, delivery_token, preview_token):
+    """Checks if sent space_id, delivery_token and preview_token
+    are a valid combination. Returns formatted output for error
+    display on each field.
+
+    :param space_id
+    :param delivery_token
+    :param preview_token
+
+    :return: Formated errors dict.
+    """
+
+    errors = {}
+
+    check_field_required(errors, space_id, 'spaceId')
+    check_field_required(errors, delivery_token, 'deliveryToken')
+    check_field_required(errors, preview_token, 'previewToken')
+
+    if not errors:
+        validate_space_token_combination(errors, space_id, delivery_token)
+        validate_space_token_combination(errors, space_id, preview_token, True)
+
+    return errors
+
+
+def check_field_required(errors, element, field_name):
+    """Checks if a required field is present."""
+
+    if not element:
+        append_error_message(
+            errors,
+            field_name,
+            translate('fieldIsRequiredLabel', locale().code)
+        )
+
+
+def append_error_message(errors, field_name, message):
+    """Appends error message to errors dict."""
+
+    if field_name not in errors:
+        errors[field_name] = []
+    if message not in errors[field_name]:
+        errors[field_name].append(message)
+
+
+def validate_space_token_combination(
+        errors, space_id, access_token, is_preview=False):
+    """Validates if client is authenticated."""
+
+    try:
+        Contentful.create_client(space_id, access_token, is_preview)
+    except HTTPError as e:
+        token_field = 'previewToken' if is_preview else 'deliveryToken'
+
+        if e.status_code == 401:
+            error_label = 'deliveryKeyInvalidLabel'
+            if is_preview:
+                error_label = 'previewKeyInvalidLabel'
+
+            append_error_message(
+                errors,
+                token_field,
+                translate(error_label, locale().code)
+            )
+        elif e.status_code == 404:
+            append_error_message(
+                errors,
+                'spaceId',
+                translate('spaceOrTokenInvalid', locale().code)
+            )
+        else:
+            append_error_message(
+                errors,
+                token_field,
+                translate('somethingWentWrongLabel', locale().code)
+            )
+
+
+def space_id():
+    """Returns the current space ID."""
+
+    return session.get(
+        'space_id',
+        environ.get('CONTENTFUL_SPACE_ID', None)
+    )
+
+
+def delivery_token():
+    """Returns the current delivery token."""
+
+    return session.get(
+        'delivery_token',
+        environ.get('CONTENTFUL_DELIVERY_TOKEN', None)
+    )
+
+
+def preview_token():
+    """Returns the current preview token."""
+
+    return session.get(
+        'preview_token',
+        environ.get('CONTENTFUL_PREVIEW_TOKEN', None)
+    )
+
 
 def render_with_globals(template_name, **params):
     """Renders the desired template with the shared state included.
@@ -186,19 +347,10 @@ def render_with_globals(template_name, **params):
         'current_path': request.path,
         'query_string': query_string(),
         'breadcrumbs': raw_breadcrumbs(),
-        'editorial_features': session.get('editorial_features', '').lower() == 'enabled'.lower(),
-        'space_id': session.get(
-            'space_id',
-            environ.get('CONTENTFUL_SPACE_ID', None)
-        ),
-        'delivery_token': session.get(
-            'delivery_token',
-            environ.get('CONTENTFUL_DELIVERY_TOKEN', None)
-        ),
-        'preview_token': session.get(
-            'preview_token',
-            environ.get('CONTENTFUL_PREVIEW_TOKEN', None)
-        ),
+        'editorial_features': session.get('editorial_features', False),
+        'space_id': space_id(),
+        'delivery_token': delivery_token(),
+        'preview_token': preview_token(),
         'environ': environ
     }
     global_parameters.update(params)

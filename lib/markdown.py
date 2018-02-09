@@ -1,6 +1,7 @@
 import CommonMark
 from flask import Markup
 
+
 def markdown(text):
     """Filter for turning text into markdown.
 

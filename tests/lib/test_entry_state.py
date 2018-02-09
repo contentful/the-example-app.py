@@ -42,13 +42,13 @@ class Session(dict):
 class EntryStateTest(TestCase):
     # should_attach_entry_state
     def test_false_when_current_api_is_not_cpa(self):
-        self.assertFalse(should_attach_entry_state('cda', Session('enabled')))
+        self.assertFalse(should_attach_entry_state('cda', Session(True)))
 
     def test_false_when_current_api_is_cpa_but_editorial_features_is_false(self):
-        self.assertFalse(should_attach_entry_state('cpa', Session('disabled')))
+        self.assertFalse(should_attach_entry_state('cpa', Session(False)))
 
     def test_true_when_current_api_is_cpa_and_editorial_features_is_true(self):
-        self.assertTrue(should_attach_entry_state('cpa', Session('enabled')))
+        self.assertTrue(should_attach_entry_state('cpa', Session(True)))
 
     # has_pending_changes
     def test_false_if_preview_entry_is_none(self):
