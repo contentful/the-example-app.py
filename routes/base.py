@@ -276,7 +276,12 @@ def validate_space_token_combination(
     """Validates if client is authenticated."""
 
     try:
-        Contentful.create_client(space_id, access_token, is_preview)
+        Contentful.create_client(
+            space_id,
+            access_token,
+            is_preview,
+            environ.get('CONTENTFUL_HOST', None)
+        )
     except HTTPError as e:
         token_field = 'previewToken' if is_preview else 'deliveryToken'
 
