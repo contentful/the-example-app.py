@@ -65,7 +65,7 @@ def save_settings():
         update_session_for('space_id', space_id)
         update_session_for('delivery_token', delivery_token)
         update_session_for('preview_token', preview_token)
-        update_session_for('editorial_features', 'enabled' if editorial_features else 'disabled')
+        update_session_for('editorial_features', editorial_features)
 
     space = contentful().space(api_id())
     return render_with_globals(
