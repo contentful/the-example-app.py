@@ -20,9 +20,9 @@ class I18nTest(TestCase):
         self.assertTrue(is_translation_available('coursesLabel', 'en-US'))
 
     # translate
-    def test_returns_an_error_string_when_locale_file_is_not_found(self):
+    def test_returns_default_fallback_locale_when_locale_file_is_not_found(self):
         self.assertEqual(
-            'Localization file for unknown-Locale is not available',
+            'Courses',
             translate('coursesLabel', 'unknown-Locale')
         )
 
