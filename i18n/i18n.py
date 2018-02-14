@@ -4,6 +4,8 @@ import glob
 
 TRANSLATIONS = {}
 
+FALLBACK_LOCALE_CODE = 'en-US'
+
 
 def I18n(app):
     """Initializes the I18n engine.
@@ -63,7 +65,7 @@ def translate(symbol, locale='en-US'):
 
     locale_dict = TRANSLATIONS.get(locale, None)
     if locale_dict is None:
-        return 'Localization file for {0} is not available'.format(locale)
+        locale_dict = TRANSLATIONS[FALLBACK_LOCALE_CODE]
 
     translated_value = locale_dict.get(symbol, None)
     if translated_value is None:
