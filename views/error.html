@@ -19,6 +19,7 @@
             <ul>
                 {% if status == 400 %}
                     <li>{{ 'contentModelChangedErrorHint'|trans(current_locale.code) }}</li>
+                    <li>{{ 'localeContentErrorHint'|trans(current_locale.code) }}</li>
                 {% elif status == 401 %}
                     <li>{{ 'verifyCredentialsErrorHint'|trans(current_locale.code) }}</li>
                 {% elif status == 404 %}
