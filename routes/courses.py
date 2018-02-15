@@ -54,9 +54,7 @@ def show_courses_by_category(category_slug):
             active_category = category
             break
     if active_category is None:
-        raise EntryNotFoundError(
-            'Category not found for slug: {0}'.format(category_slug)
-        )
+        raise EntryNotFoundError('errorMessage404Category')
 
     courses = contentful().courses_by_category(
         active_category.id,
@@ -121,9 +119,7 @@ def find_lesson_by_slug(course_slug, lesson_slug):
             lesson = l
             break
     if lesson is None:
-        raise EntryNotFoundError(
-            'Lesson not found for slug: {0}'.format(lesson_slug)
-        )
+        raise EntryNotFoundError('errorMessage404Lesson')
 
     visited_lessons = session.get('visited_lessons', [])
     if lesson.id not in visited_lessons:

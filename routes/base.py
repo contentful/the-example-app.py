@@ -141,6 +141,7 @@ def locale():
         for locale in locales():
             if locale.code == request.args.get('locale', DEFAULT_LOCALE_CODE):
                 return locale
+        return DEFAULT_LOCALE
     except HTTPError:
         return DEFAULT_LOCALE
 
@@ -356,6 +357,7 @@ def render_with_globals(template_name, **params):
         'space_id': space_id(),
         'delivery_token': delivery_token(),
         'preview_token': preview_token(),
+        'is_using_custom_credentials': is_using_custom_credentials(session),
         'environ': environ
     }
     global_parameters.update(params)

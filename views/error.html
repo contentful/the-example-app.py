@@ -2,32 +2,52 @@
 
 {% block content %}
     <div class='layout-centered'>
-        {% include 'partials/breadcrumb.html' %}
         <div class='error'>
             <h1>{{ 'somethingWentWrongLabel'|trans(current_locale.code) }} ({{ status }})</h1>
-            <h2>{{ 'tryLabel'|trans(current_locale.code) }}</h2>
+            {% if status == 404 %}
+                {% if known_resource %}
+                    <p>{{ error.args[0]|trans(current_locale.code) }}</p>
+                {% else %}
+                    <p>{{ 'errorMessage404Route'|trans(current_locale.code) }}</p>
+                {% endif %}
+            {% else %}
+                {% if 'message' in error.__dict__ %}
+                    <p>{{ error.message }}</p>
+                {% endif %}
+            {% endif %}
+            <h2>{{ 'hintsLabel'|trans(current_locale.code) }}</h2>
             <ul>
                 {% if status == 400 %}
-                    <li>{{ 'contentModelChangedErrorLabel'|trans(current_locale.code) }}</li>
-                    <li>{{ 'localeContentErrorLabel'|trans(current_locale.code) }}</li>
+                    <li>{{ 'contentModelChangedErrorHint'|trans(current_locale.code) }}</li>
                 {% elif status == 401 %}
-                    <li>{{ 'verifyCredentialsErrorLabel'|trans(current_locale.code) }}</li>
+                    <li>{{ 'verifyCredentialsErrorHint'|trans(current_locale.code) }}</li>
                 {% elif status == 404 %}
-                    <li>{{ 'error404Route'|trans(current_locale.code) }}</li>
-                    <li>{{ 'draftOrPublishedErrorLabel'|trans(current_locale.code) }}</li>
+                    <li>{{ 'notFoundErrorHint'|trans(current_locale.code) }}</li>
+                    <li>{{ 'draftOrPublishedErrorHint'|trans(current_locale.code) }}</li>
+                {% else %}
+                    <li>{{ 'contentModelChangedErrorHint'|trans(current_locale.code) }}</li>
+                    <li>{{ 'draftOrPublishedErrorHint'|trans(current_locale.code) }}</li>
+                    <li>{{ 'localeContentErrorHint'|trans(current_locale.code) }}</li>
                 {% endif %}
                 {% if environment != 'production' and stacktrace %}
-                    <li>{{ 'stackTraceErrorLabel'|trans(current_locale.code) }}</li>
+                    <li>{{ 'stackTraceErrorHint'|trans(current_locale.code) }}</li>
                 {% endif %}
             </ul>
+            {% if is_using_custom_credentials %}
+                <form action='/settings/reset' method='POST'>
+                    <p>
+                        <button type="submit">{{ 'resetCredentialsLabel'|trans(current_locale.code) }}</button>
+                    </p>
+                </form>
+            {% endif %}
             {% if environment != 'production' %}
-                {% if 'response' in error.__dict__ or 'message' in error.__dict__ %}
+                {% if from_contentful %}
                     <h2>{{ 'errorLabel'|trans(current_locale.code) }}</h2>
                     <pre class='error__stack-trace'>
                     {% if 'message' in error.__dict__ %}
                         <code class='shell'>{{ error.message }}</code>
                     {% endif %}
-                    {% if 'response' in error.__dict__ %}
+                    {% if 'response' in error.__dict__ and 'json' in error.response.__dict__ %}
                         <code class='shell'>{{ error.response.json()|pretty_json }}</code>
                     {% endif %}
                 </pre>
