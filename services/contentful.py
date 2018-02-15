@@ -77,9 +77,7 @@ class Contentful(object):
         })
         if courses:
             return courses[0]
-        raise EntryNotFoundError(
-            'Course not found for slug: {0}'.format(slug)
-        )
+        raise EntryNotFoundError('errorMessage404Course')
 
     def courses_by_category(self, category_id, api_id, locale):
         """Fetches all courses for a category."""

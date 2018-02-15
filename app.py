@@ -10,7 +10,7 @@ from lib.entry_state import should_show_entry_state
 from lib.markdown import markdown
 
 from routes.base import before_request, format_meta_title, parameterized_url
-from routes.errors import pretty_json
+from routes.errors import pretty_json, wrap_errors
 
 from routes.index import index
 from routes.courses import courses
@@ -81,6 +81,16 @@ app.add_template_global(parameterized_url)
 app.add_template_global(should_show_entry_state)
 app.add_template_filter(pretty_json)
 
+# Generic error handlers
+@app.errorhandler(404)
+@wrap_errors
+def page_not_found(e):
+    raise e
+
+@app.errorhandler(500)
+@wrap_errors
+def server_error(e):
+    raise e
 
 if __name__ == '__main__':
     app.run(
