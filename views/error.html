@@ -43,15 +43,17 @@
             {% endif %}
             {% if environment != 'production' %}
                 {% if from_contentful %}
-                    <h2>{{ 'errorLabel'|trans(current_locale.code) }}</h2>
-                    <pre class='error__stack-trace'>
                     {% if 'message' in error.__dict__ %}
+                      <h2>{{ 'errorLabel'|trans(current_locale.code) }}</h2>
+                      <pre class='error__stack-trace'>
                         <code class='shell'>{{ error.message }}</code>
-                    {% endif %}
-                    {% if 'response' in error.__dict__ and 'json' in error.response.__dict__ %}
+                      </pre>
+                    {% elif 'response' in error.__dict__ and 'json' in error.response.__dict__ %}
+                      <h2>{{ 'errorLabel'|trans(current_locale.code) }}</h2>
+                      <pre class='error__stack-trace'>
                         <code class='shell'>{{ error.response.json()|pretty_json }}</code>
+                      </pre>
                     {% endif %}
-                </pre>
                 {% endif %}
                 {% if stacktrace %}
                     <h2>{{ 'stackTraceLabel'|trans(current_locale.code) }}</h2>

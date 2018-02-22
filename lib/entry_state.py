@@ -75,7 +75,9 @@ def find_matching_resource(preview_resource, delivery_entry, search_field):
     """
 
     for delivery_resource in delivery_entry.fields().get(search_field, []):
-        if preview_resource.id == delivery_resource.id:
+        if preview_resource.id == delivery_resource.id and (
+            delivery_resource.type == 'Entry' or delivery_resource.type == 'Asset'
+        ):
             return delivery_resource
 
 
