@@ -12,16 +12,20 @@
     </div>
 
     <div class="modules-container">
-        {% for module in landing_page.content_modules %}
-            {% if module.sys.get('content_type', None) %}
-                {% if module.content_type.id == 'layoutCopy' %}
-                    {% include 'partials/moduleCopy.html' %}
-                {% elif module.content_type.id == 'layoutHeroImage' %}
-                    {% include 'partials/moduleHeroImage.html' %}
-                {% elif module.content_type.id == 'layoutHighlightedCourse' %}
-                    {% include 'partials/moduleHighlightedCourse.html' %}
+        {% if 'content_modules' in landing_page.fields(current_locale.code) and landing_page.content_modules %}
+            {% for module in landing_page.content_modules %}
+                {% if module.sys.get('content_type', None) %}
+                    {% if module.content_type.id == 'layoutCopy' %}
+                        {% include 'partials/moduleCopy.html' %}
+                    {% elif module.content_type.id == 'layoutHeroImage' %}
+                        {% include 'partials/moduleHeroImage.html' %}
+                    {% elif module.content_type.id == 'layoutHighlightedCourse' %}
+                        {% include 'partials/moduleHighlightedCourse.html' %}
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            {% include 'partials/emptyModule.html' %}
+        {% endif %}
     </div>
 {% endblock %}

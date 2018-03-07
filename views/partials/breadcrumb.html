@@ -2,7 +2,7 @@
     <ul>
         {% for crumb in breadcrumbs -%}
             <li>
-                <a href="{{ crumb['url'] }}">{{ crumb['label'] }}</a>
+                <a href="{{ crumb['url'] }}{{ query_string }}">{{ crumb['label'] }}</a>
             </li>
         {%- endfor %}
     </ul>
