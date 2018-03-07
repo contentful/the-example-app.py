@@ -56,11 +56,15 @@
                 {% endif %}
 
                 <div class="grid-list">
-                    {% for course in courses %}
-                        <div class="grid-list__item">
-                            {% include 'partials/courseCard.html' %}
-                        </div>
-                    {% endfor %}
+                    {% if courses %}
+                        {% for course in courses %}
+                            <div class="grid-list__item">
+                                {% include 'partials/courseCard.html' %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% include 'partials/emptyModule.html' %}
+                    {% endif %}
                 </div>
             </div>
         </section>
