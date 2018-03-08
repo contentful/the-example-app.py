@@ -44,9 +44,9 @@ class Contentful(object):
     def client(self, api_id):
         """Returns the Delivery or Preview API client."""
 
-        if api_id == 'cda':
-            return self.delivery_client
-        return self.preview_client
+        if api_id == 'cpa':
+            return self.preview_client
+        return self.delivery_client
 
     def space(self, api_id):
         """Returns the current space."""
