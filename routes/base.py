@@ -154,7 +154,7 @@ def api_id():
 
 def current_api():
     """Returns the currently selected API data."""
-    return {
+    api_data = {
         'cda': {
             'label': translate('contentDeliveryApiLabel', locale().code),
             'id': 'cda'
@@ -163,7 +163,12 @@ def current_api():
             'label': translate('contentPreviewApiLabel', locale().code),
             'id': 'cpa'
         }
-    }[api_id()]
+    }
+
+    try:
+        return api_data[api_id()]
+    except KeyError:
+        return api_data[DEFAULT_API]
 
 
 def query_string():
