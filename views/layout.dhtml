@@ -1,13 +1,17 @@
 {% macro entry_state(entry) -%}
   {% if entry.draft %}
-    <div class="pill pill--draft">
-      {{ 'draftLabel'|trans(current_locale.code) }}
-    </div>
+      <div class="editorial-features__item">
+          <div class="pill pill--draft">
+              {{ 'draftLabel'|trans(current_locale.code) }}
+          </div>
+      </div>
   {% endif %}
 
   {% if entry.pending_changes %}
-    <div class="pill pill--pending-changes">
-      {{ 'pendingChangesLabel'|trans(current_locale.code) }}
+    <div class="editorial-features__item">
+        <div class="pill pill--pending-changes">
+            {{ 'pendingChangesLabel'|trans(current_locale.code) }}
+        </div>
     </div>
   {% endif %}
 {%- endmacro %}
@@ -49,8 +53,8 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="{{ 'metaDescription'|trans(current_locale.code) }}" />
-<meta name="twitter:card" content="{{ 'metaTwitterCard'|trans(current_locale.code) }}" />
+<meta name="description" content='{{ 'metaDescription'|trans(current_locale.code) }}' />
+<meta name="twitter:card" content='{{ 'metaTwitterCard'|trans(current_locale.code) }}' />
 
 <meta property="og:title" content="{{ format_meta_title(title, current_locale.code) }}">
 <meta property="og:type" content="article" />
@@ -59,8 +63,8 @@
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="1200" />
-<meta property="og:image:alt" content="{{ 'metaImageAlt'|trans(current_locale.code) }}" />
-<meta property="og:description" content="{{ 'metaImageDescription'|trans(current_locale.code) }}" />
+<meta property="og:image:alt" content='{{ 'metaImageAlt'|trans(current_locale.code) }}' />
+<meta property="og:description" content='{{ 'metaImageDescription'|trans(current_locale.code) }}' />
 
 <link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='apple-touch-icon.png') }}" />
 <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}" />
@@ -292,7 +296,7 @@
 <script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
 
 {% if environ.get('HEROKU', False) %}
-  {% include 'partials/vendor/analytics.html' %}
+  {% include 'partials/vendor/analytics.dhtml' %}
 {% endif %}
 </body>
 </html>

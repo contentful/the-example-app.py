@@ -1,0 +1,19 @@
+{% set style = '--emphasized' if module.visual_style == 'Emphasized' else '' %}
+
+<div class="module module-copy{{ style }}">
+    <div class="module-copy__first{{ style }}">
+        {% if module.headline %}
+            <h1 class="module-copy__headline{{ style }}">{{ module.headline }}</h1>
+        {% endif %}
+
+        <div class="module-copy__copy{{ style }}">
+            {{ module.copy|markdown }}
+        </div>
+    </div>
+
+    <div class="module-copy__second{{ style }}">
+        {% if module.cta_title and module.cta_link %}
+            <a href="{{ module.cta_link }}{{ query_string }}" class="cta module-copy__cta{{ style }}">{{ module.cta_title }}</a>
+        {% endif %}
+    </div>
+</div>

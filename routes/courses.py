@@ -111,7 +111,7 @@ def course_by_slug_lessons_route(slug):
 @wrap_errors
 def find_lesson_by_slug(course_slug, lesson_slug):
     course = contentful().course(course_slug, api_id(), locale().code)
-    lessons = course.lessons
+    lessons = course.lessons if 'lessons' in course.fields(locale().code) else []
 
     lesson = None
     for l in lessons:

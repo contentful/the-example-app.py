@@ -12,7 +12,9 @@
     <h2 class="course-card__title">
         <a href="/courses/{{ course.slug }}{{ query_string }}">{{ course.title }}</a>
         {% if should_show_entry_state(course, current_api['id']) %}
-            {{ entry_state(course) }}
+            <div class='editorial-features'>
+                {{ entry_state(course) }}
+            </div>
         {% endif %}
     </h2>
 

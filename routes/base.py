@@ -209,7 +209,7 @@ def format_meta_title(title, locale):
     """
     if not title:
         return translate('defaultTitle', locale)
-    return "{0} - {1}".format(
+    return "{0} — {1}".format(
         title.capitalize(),
         translate('defaultTitle', locale)
     )
@@ -368,6 +368,6 @@ def render_with_globals(template_name, **params):
     global_parameters.update(params)
 
     return render_template(
-        '{0}.html'.format(template_name),
+        '{0}.dhtml'.format(template_name),
         **global_parameters
     )

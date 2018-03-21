@@ -1,0 +1,39 @@
+<div class="lesson">
+    <h1 class="lesson__title">{{ lesson.title }}</h1>
+
+    {{ render_editorial_features(lesson) }}
+
+    <div class="lesson__modules">
+        {% if 'modules' in lesson.fields() and lesson.modules %}
+            {% for module in lesson.modules %}
+                {% if module.sys.get('content_type', None) %}
+                    {% if module.content_type.id == 'lessonCodeSnippets' %}
+                        {% include 'partials/lessonModuleCodeSnippets.dhtml' %}
+                    {% elif module.content_type.id == 'lessonCopy' %}
+                        {% include 'partials/lessonModuleCopy.dhtml' %}
+                    {% elif module.content_type.id == 'lessonImage' %}
+                        {% include 'partials/lessonModuleImage.dhtml' %}
+                    {% else %}
+                        <h2>{{ 'lessonModuleErrorTitle'|trans(current_locale.code) }}</h2>
+                        <p>
+                            <span>{{ 'lessonModuleErrorBody'|trans(current_locale.code) }}</span>
+                            <strong>{{ module.id }}</strong>
+                        </p>
+                    {% endif %}
+                {% else %}
+                    <h2>{{ 'lessonModuleErrorTitle'|trans(current_locale.code) }}</h2>
+                    <p>
+                        <span>{{ 'lessonModuleErrorBody'|trans(current_locale.code) }}</span>
+                        <strong>{{ module.id }}</strong>
+                    </p>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% include 'partials/emptyModule.dhtml' %}
+        {% endif %}
+    </div>
+
+    {% if next_lesson %}
+        <a href="/courses/{{ course.slug }}/lessons/{{ next_lesson.slug }}{{ query_string }}" class="lesson__cta cta">{{ 'nextLessonLabel'|trans(current_locale.code) }}</a>
+    {% endif %}
+</div>
