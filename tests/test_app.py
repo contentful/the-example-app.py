@@ -44,7 +44,7 @@ class AppTest(IntegrationTestBase):
 
     def test_query_strings_are_sanitized_to_only_include_locale_and_api(self):
         response = self.app.get('/?api=cpa&locale=en-US&editorial_features=enabled').data
-        self.assertIn(b'/courses?api=cpa&amp;locale=en-US', response)
+        self.assertIn(b'/courses?api=cpa&locale=en-US', response)
 
         # Doesn't add additional parameters
         self.assertNotIn(b'/courses?api=cpa&amp;locale=en-US&amp;', response)
