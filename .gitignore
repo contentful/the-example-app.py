@@ -3,3 +3,4 @@
 .coverage
 nosetests.xml
 tests/e2e
+cypress
