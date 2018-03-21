@@ -164,7 +164,7 @@ def current_api():
             'id': 'cpa'
         }
     }
-    
+
     try:
         return api_data[api_id()]
     except KeyError:
