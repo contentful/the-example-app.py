@@ -2,3 +2,4 @@
 .DS_Store
 .coverage
 nosetests.xml
+tests/e2e

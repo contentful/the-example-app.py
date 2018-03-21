@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout.dhtml" %}
 
 {% macro render_errors(errors) -%}
     {% for message in errors %}
@@ -15,7 +15,7 @@
 
 {% block content %}
 <div class='layout-centered-small'>
-    {% include 'partials/breadcrumb.html' %}
+    {% include 'partials/breadcrumb.dhtml' %}
     <h1>{{ title }}</h1>
     <p>{{ 'settingsIntroLabel'|trans(current_locale.code) }}</p>
 

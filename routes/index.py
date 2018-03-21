@@ -25,6 +25,7 @@ def show_index():
 
     return render_with_globals(
         'landingPage',
+        title='Home',
         landing_page=landing_page,
         breadcrumbs=refine(
             raw_breadcrumbs(),

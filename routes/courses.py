@@ -80,7 +80,7 @@ def show_courses_by_category(category_slug):
 @wrap_errors
 def find_courses_by_slug(slug):
     course = contentful().course(slug, api_id(), locale().code)
-    lessons = course.lessons
+    lessons = course.lessons if 'lessons' in course.fields() else []
 
     visited_lessons = session.get('visited_lessons', [])
     if course.id not in visited_lessons:
@@ -111,7 +111,7 @@ def course_by_slug_lessons_route(slug):
 @wrap_errors
 def find_lesson_by_slug(course_slug, lesson_slug):
     course = contentful().course(course_slug, api_id(), locale().code)
-    lessons = course.lessons
+    lessons = course.lessons if 'lessons' in course.fields() else []
 
     lesson = None
     for l in lessons:

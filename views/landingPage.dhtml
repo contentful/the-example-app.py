@@ -1,0 +1,31 @@
+{% extends "layout.dhtml" %}
+
+{% block content %}
+    {% if landing_page.slug != 'home' %}
+        <div class="layout-centered">
+            {% include 'partials/breadcrumb.dhtml' %}
+        </div>
+    {% endif %}
+
+    <div class="layout-centered">
+        {{ render_editorial_features(landing_page) }}
+    </div>
+
+    <div class="modules-container">
+        {% if 'content_modules' in landing_page.fields(current_locale.code) and landing_page.content_modules %}
+            {% for module in landing_page.content_modules %}
+                {% if module.sys.get('content_type', None) %}
+                    {% if module.content_type.id == 'layoutCopy' %}
+                        {% include 'partials/moduleCopy.dhtml' %}
+                    {% elif module.content_type.id == 'layoutHeroImage' %}
+                        {% include 'partials/moduleHeroImage.dhtml' %}
+                    {% elif module.content_type.id == 'layoutHighlightedCourse' %}
+                        {% include 'partials/moduleHighlightedCourse.dhtml' %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% include 'partials/emptyModule.dhtml' %}
+        {% endif %}
+    </div>
+{% endblock %}

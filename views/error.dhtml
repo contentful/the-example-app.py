@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout.dhtml" %}
 
 {% block content %}
     <div class='layout-centered'>

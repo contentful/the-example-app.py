@@ -154,7 +154,7 @@ def api_id():
 
 def current_api():
     """Returns the currently selected API data."""
-    return {
+    known_apis = {
         'cda': {
             'label': translate('contentDeliveryApiLabel', locale().code),
             'id': 'cda'
@@ -163,7 +163,11 @@ def current_api():
             'label': translate('contentPreviewApiLabel', locale().code),
             'id': 'cpa'
         }
-    }[api_id()]
+    }
+
+    if api_id() in known_apis:
+        return known_apis[api_id()]
+    return known_apis[DEFAULT_API]
 
 
 def query_string():
@@ -204,7 +208,7 @@ def format_meta_title(title, locale):
     """
     if not title:
         return translate('defaultTitle', locale)
-    return "{0} - {1}".format(
+    return "{0} — {1}".format(
         title.capitalize(),
         translate('defaultTitle', locale)
     )
@@ -363,6 +367,6 @@ def render_with_globals(template_name, **params):
     global_parameters.update(params)
 
     return render_template(
-        '{0}.html'.format(template_name),
+        '{0}.dhtml'.format(template_name),
         **global_parameters
     )

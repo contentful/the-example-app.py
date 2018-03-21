@@ -1,31 +1,31 @@
-{% extends "layout.html" %}
+{% extends "layout.dhtml" %}
 
 {% block content %}
     <div class="layout-centered">
-        {% include 'partials/breadcrumb.html' %}
+        {% include 'partials/breadcrumb.dhtml' %}
 
         <h1>{{ title }}</h1>
 
         <table>
             <tbody>
                 <tr>
-                    <th>{{ 'companyLabel'|trans(current_locale.code) }}</th>
+                    <th>{{ 'companyLabel'|trans(current_locale.code) }}:</th>
                     <td>Contentful GmbH</td>
                 </tr>
                 <tr>
-                    <th>{{ 'officeLabel'|trans(current_locale.code) }}</th>
+                    <th>{{ 'officeLabel'|trans(current_locale.code) }}:</th>
                     <td>Ritterstr. 12-14 <br /> 10969 Berlin <br /> {{ 'germanyLabel'|trans(current_locale.code) }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'registrationCourtLabel'|trans(current_locale.code) }}</th>
+                    <th>{{ 'registrationCourtLabel'|trans(current_locale.code) }}:</th>
                     <td>Berlin-Charlottenburg HRB 155607 B</td>
                 </tr>
                 <tr>
-                    <th>{{ 'managingDirectorLabel'|trans(current_locale.code) }}</th>
+                    <th>{{ 'managingDirectorLabel'|trans(current_locale.code) }}:</th>
                     <td>Sascha Konietzke</td>
                 </tr>
                 <tr>
-                    <th>{{ 'vatNumberLabel'|trans(current_locale.code) }}</th>
+                    <th>{{ 'vatNumberLabel'|trans(current_locale.code) }}:</th>
                     <td>DE275148225</td>
                 </tr>
             </tbody>

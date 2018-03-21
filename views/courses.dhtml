@@ -1,0 +1,72 @@
+{% extends "layout.dhtml" %}
+
+{% block content %}
+    <div class="layout-no-sidebar">
+        {% include 'partials/breadcrumb.dhtml' %}
+    </div>
+
+    <div class="layout-sidebar">
+        <section class="layout-sidebar__sidebar">
+            <div class="layout-sidebar__sidebar-header">
+                <h2 class="layout-sidebar__sidebar-title">{{ 'categoriesLabel'|trans(current_locale.code) }}</h2>
+            </div>
+
+            <div class="layout-sidebar__sidebar-content">
+                <div class="sidebar-menu">
+                    <ul class="sidebar-menu__list">
+                        <li class="sidebar-menu__item">
+                            <a href="/courses{{ query_string }}" class="sidebar-menu__link {{ '' if current_category else 'active' }}">{{ 'allCoursesLabel'|trans(current_locale.code) }}</a>
+                        </li>
+
+                        {% for category in categories %}
+                            <li class="sidebar-menu__item">
+                                <a
+                                    href="/courses/categories/{{ category.slug }}{{ query_string }}"
+                                    class="sidebar-menu__link {{ 'active' if current_category and current_category.id == category.id else '' }}"
+                                    >{{ category.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="layout-sidebar__content">
+            <div class="courses">
+                <h1>{{ title }}</h1>
+
+                {% if editorial_features %}
+                    <div class="editorial-features">
+                        <div class="editorial-features__item">
+                            <a
+                                href="https://app.contentful.com/spaces/{{ space_id }}/entries/?contentTypeId=course"
+                                class="editorial-features__text"
+                                target="_blank"
+                                rel="noopener"
+                                >{{ 'editInTheWebAppLabel'|trans(current_locale.code) }}</a>
+
+                            <div class="editorial-features__hint-wrapper">
+                                <svg class="editorial-features__hint-icon">
+                                    <use xlink:href="{{ url_for('static', filename='/icons/icons.svg') }}#info" />
+                                    <div class="editorial-features__hint-message">{{ 'editorialFeaturesHint'|trans(current_locale.code) }}</div>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="grid-list">
+                    {% if courses %}
+                        {% for course in courses %}
+                            <div class="grid-list__item">
+                                {% include 'partials/courseCard.dhtml' %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% include 'partials/emptyModule.dhtml' %}
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
