@@ -70,12 +70,14 @@
                             </div>
                         {% endif %}
 
-                        <div class="course__overview-cta-wrapper">
-                            <a
-                                href="/courses/{{ course.slug}}/lessons/{{ next_lesson.slug }}{{ query_string }}"
-                                class="course__overview-cta cta"
-                                >{{ 'startCourseLabel'|trans(current_locale.code) }}</a>
-                        </div>
+                        {% if next_lesson %}
+                            <div class="course__overview-cta-wrapper">
+                                <a
+                                    href="/courses/{{ course.slug}}/lessons/{{ next_lesson.slug }}{{ query_string }}"
+                                    class="course__overview-cta cta"
+                                    >{{ 'startCourseLabel'|trans(current_locale.code) }}</a>
+                            </div>
+                        {% endif %}
                     </div>
 
                     <div class="course__description">

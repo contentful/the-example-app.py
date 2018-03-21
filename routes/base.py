@@ -154,7 +154,7 @@ def api_id():
 
 def current_api():
     """Returns the currently selected API data."""
-    known_apis = {
+    api_data = {
         'cda': {
             'label': translate('contentDeliveryApiLabel', locale().code),
             'id': 'cda'
@@ -164,10 +164,11 @@ def current_api():
             'id': 'cpa'
         }
     }
-
-    if api_id() in known_apis:
-        return known_apis[api_id()]
-    return known_apis[DEFAULT_API]
+    
+    try:
+        return api_data[api_id()]
+    except KeyError:
+        return api_data[DEFAULT_API]
 
 
 def query_string():
