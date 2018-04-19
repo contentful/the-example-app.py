@@ -32,6 +32,7 @@ class Contentful(object):
             host = "contentful"
 
         options = {
+            'environment': 'master',
             'application_name': 'the-example-app.py',
             'application_version': '1.0.0',
             'api_url': 'cdn.{0}.com'.format(host)
@@ -52,6 +53,11 @@ class Contentful(object):
         """Returns the current space."""
 
         return self.client(api_id).space()
+
+    def locales(self, api_id):
+        """Returns the available locales."""
+
+        return self.client(api_id).locales()
 
     def courses(self, api_id, locale, options=None):
         """Fetches all courses."""

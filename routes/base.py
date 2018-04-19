@@ -129,7 +129,7 @@ def locales():
     """Returns the list of available locales."""
 
     try:
-        return contentful().space(api_id).locales
+        return contentful().locales(api_id)
     except HTTPError:
         return [DEFAULT_LOCALE]
 
