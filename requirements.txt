@@ -38,7 +38,7 @@ Pygments==2.2.0
 python-dateutil==2.7.2
 python-dotenv==0.7.1
 rednose==1.2.3
-requests==2.18.4
+requests==2.20.0
 simplegeneric==0.8.1
 six==1.11.0
 termstyle==0.1.11
