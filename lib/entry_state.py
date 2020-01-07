@@ -74,9 +74,13 @@ def find_matching_resource(preview_resource, delivery_entry, search_field):
     :return: Entry from the Delivery API or None.
     """
 
+    if not delivery_entry:
+        return None
+
     for delivery_resource in delivery_entry.fields().get(search_field, []):
         if preview_resource.id == delivery_resource.id and (
-            delivery_resource.type == 'Entry' or delivery_resource.type == 'Asset'
+            delivery_resource.type == 'Entry'
+            or delivery_resource.type == 'Asset'
         ):
             return delivery_resource
 
