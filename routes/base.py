@@ -181,10 +181,10 @@ def query_string():
         'preview_token',
         'editorial_features'
     ]
-    args = {k: v for k, v
-            in request.args.items()
-            if k not in rejected_keys}
-
+    args = [(k, vi)
+            for k, v in request.args.lists()
+            for vi in v
+            if k not in rejected_keys]
     if not args:
         return ''
     return '?{0}'.format(urllib.parse.urlencode(args))
