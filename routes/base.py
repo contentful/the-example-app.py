@@ -2,6 +2,7 @@ from flask import render_template, request, session, redirect, url_for
 from os import environ, path
 from contentful.errors import HTTPError
 from contentful.locale import Locale
+import urllib.parse
 
 from lib.breadcrumbs import breadcrumbs
 from i18n.i18n import translate
@@ -186,12 +187,7 @@ def query_string():
 
     if not args:
         return ''
-    return '?{0}'.format(
-        '&'.join(
-            '{0}={1}'.format(k, v) for k, v
-            in args.items()
-        )
-    )
+    return '?{0}'.format(urllib.parse.urlencode(args))
 
 
 def raw_breadcrumbs():
