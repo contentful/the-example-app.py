@@ -1,4 +1,4 @@
-## The Python example app
+# The Python example app
 
 [![CircleCI](https://img.shields.io/circleci/project/github/contentful/the-example-app.py.svg)](https://circleci.com/gh/contentful/the-example-app.py)
 
@@ -13,6 +13,10 @@ The app demonstrates how decoupling content from its presentation enables greate
 <a href="https://the-example-app-py.herokuapp.com/" target="_blank"><img src="https://images.contentful.com/88dyiqcr7go8/4H3umATfSwOAW6eqOYaW0Q/9aa6880593a47a0c598ca447759b4c43/the-example-app-py.herokuapp.com.png" alt="Screenshot of the example app"/></a>
 
 You can see a hosted version of `The Python example app` on <a href="https://the-example-app-py.herokuapp.com/" target="_blank">Heroku</a>.
+
+## Disclaimer
+
+Please note: this repository is meant as a learning tool for Contentful in a development environment, and is *not* meant or supported for production use.
 
 ## What is Contentful?
 [Contentful](https://www.contentful.com) provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enable developers and content creators to ship digital products faster.
