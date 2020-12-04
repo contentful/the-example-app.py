@@ -2,6 +2,7 @@ from flask import render_template, request, session, redirect, url_for
 from os import environ, path
 from contentful.errors import HTTPError
 from contentful.locale import Locale
+import urllib.parse
 
 from lib.breadcrumbs import breadcrumbs
 from i18n.i18n import translate
@@ -180,18 +181,13 @@ def query_string():
         'preview_token',
         'editorial_features'
     ]
-    args = {k: v for k, v
-            in request.args.items()
-            if k not in rejected_keys}
-
+    args = [(k, vi)
+            for k, v in request.args.lists()
+            for vi in v
+            if k not in rejected_keys]
     if not args:
         return ''
-    return '?{0}'.format(
-        '&'.join(
-            '{0}={1}'.format(k, v) for k, v
-            in args.items()
-        )
-    )
+    return '?{0}'.format(urllib.parse.urlencode(args))
 
 
 def raw_breadcrumbs():
