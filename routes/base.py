@@ -1,4 +1,4 @@
-from flask import render_template, request, session, redirect, url_for
+from flask import render_template, request, session, redirect, url_for, escape
 from os import environ, path
 from contentful.errors import HTTPError
 from contentful.locale import Locale
@@ -351,7 +351,7 @@ def render_with_globals(template_name, **params):
         'locales': locales(),
         'current_locale': locale(),
         'current_api': current_api(),
-        'current_path': request.path,
+        'current_path': escape(request.path),
         'query_string': query_string(),
         'breadcrumbs': raw_breadcrumbs(),
         'editorial_features': session.get('editorial_features', False),
