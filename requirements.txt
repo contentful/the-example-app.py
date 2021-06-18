@@ -1,5 +1,5 @@
 CommonMark==0.7.4
-contentful==1.7.0
+contentful==1.12.4
 coverage==4.4.2
 flake8==3.5.0
 Flask==0.12.2
